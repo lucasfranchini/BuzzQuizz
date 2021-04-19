@@ -7,14 +7,24 @@
     <link rel="stylesheet" href="estilos/estilo.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos/reset.css">
     <title>BuzzQuizz</title>
 </head>
 <body>
     <div class="topo">
-        <h1></h1>
+        <h1>BuzzQuizz</h1>
     </div>
-    <ul class="meus-quizzes"></ul>
+    <ul class="meus-quizzes">
+        <ion-icon name="add-circle"></ion-icon>
+        <li class="nenhum-quizz">
+            <span>
+                Você não criou nenhum <br> quizz ainda :(
+            </span>
+            <button>Criar Quizz</button>
+        </li>
+    </ul>
     <ul class="todos-quizzes"></ul>
     <script src="scripts.js"></script>
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js%22%3E"></script>
 </body>
 </html>
