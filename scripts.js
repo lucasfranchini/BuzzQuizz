@@ -17,23 +17,5 @@ function popularquizzes(resposta){
             <div class="degrade"></div>
             <span>${quizzes[i].title}</span>
         </li>`;
-        campoQuizz.innerHTML +=`
-        <li id=${quizzes[i].id}>
-            <img src="${quizzes[i].image}" alt="">
-            <div class="degrade"></div>
-            <span>${quizzes[i].title}</span>
-        </li>`;
-        campoQuizz.innerHTML +=`
-        <li id=${quizzes[i].id}>
-            <img src="${quizzes[i].image}" alt="">
-            <div class="degrade"></div>
-            <span>${quizzes[i].title}</span>
-        </li>`;
-        campoQuizz.innerHTML +=`
-        <li id=${quizzes[i].id}>
-            <img src="${quizzes[i].image}" alt="">
-            <div class="degrade"></div>
-            <span>${quizzes[i].title}</span>
-        </li>`;
     }
 }
