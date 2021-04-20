@@ -16,7 +16,7 @@
         <div class="topo">
             <h1>BuzzQuizz</h1>
         </div>
-        <div class="meus-quizzes">
+        <div class="meus-quizzes escondido">
             <div class="cabecalho escondido">
                 <span>Seus Quizzes</span>
                 <ion-icon name="add-circle"></ion-icon>
@@ -28,23 +28,134 @@
                 <button>Criar Quizz</button>
             </div>
         </div>
-        <div class="todos-quizzes">
+        <div class="todos-quizzes escondido">
             <span><strong>Todos os Quizzes</strong></span>
             <ul>
             </ul>
         </div>
     </div>
     <div class="pagina-quizz-aberto escondido">
-        
+        <div class="cabecalho-quizz">
+            <h1>O quanto você conhece de Friends?</h1>
+        </div>
+        <div class="pergunta">
+            <div class="titulo-pergunta">
+                <span>"Em que episódio ocorre o casamento de Monica e Chandler?"</span>
+            </div>
+            <div class="caixa-respostas">
+                <div class="resposta">
+
+                </div>
+                <div class="resposta">
+                </div>
+                
+                <div class="resposta">
+                </div>
+                
+                <div class="resposta">
+                </div>
+            </div>
+        </div>
+        <div class="pergunta">
+            <div class="titulo-pergunta">
+                <span>"Em que episódio ocorre o casamento de Monica e Chandler?"</span>
+            </div>
+            <div class="caixa-respostas">
+                <div class="resposta">
+
+                </div>
+                <div class="resposta">
+                </div>
+                
+                <div class="resposta">
+                </div>
+                
+                <div class="resposta">
+                </div>
+            </div>
+        </div>
+        <div class="pergunta">
+            <div class="titulo-pergunta">
+                <span>"Em que episódio ocorre o casamento de Monica e Chandler?"</span>
+            </div>
+            <div class="caixa-respostas">
+                <div class="resposta">
+
+                </div>
+                <div class="resposta">
+                </div>
+                
+                <div class="resposta">
+                </div>
+                
+                <div class="resposta">
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="criar-quizzes escondido">
+    <div class="informacoes-basicas escondido">
         <span>Comece pelo começo</span>
-        <input type="text" placeholder="Título do seu quizz" onfocus="this.value='';">
-        <input type="text" placeholder="URL da imagem do seu quizz" onfocus="this.value='';">
-        <input type="text" placeholder="Quantidade de perguntas do quizz" onfocus="this.value='';">
-        <input type="text" placeholder="Quantidade de níveis do quizz" onfocus="this.value='';">
+        <div class="novo-quiz">
+            <input type="text" placeholder="Título do seu quizz" onfocus="this.value='';">
+            <input type="text" placeholder="URL da imagem do seu quizz" onfocus="this.value='';">
+            <input type="text" placeholder="Quantidade de perguntas do quizz" onfocus="this.value='';">
+            <input type="text" placeholder="Quantidade de níveis do quizz" onfocus="this.value='';">
+        </div>
         <button>Prosseguir pra criar perguntas</button>
+    </div>
+
+    <div class="criar-perguntas escondido">
+        <span>Crie suas perguntas</span>
+        <div class="perguntas">
+            <div class="numero-pergunta">
+                <h1>Pergunta 1</h1>
+                <ion-icon name="create-outline"></ion-icon>
+            </div>
+            <input type="text" placeholder="Texto da pergunta" onfocus="this.value='';">
+            <input type="text" placeholder="Cor de fundo da pergunta" onfocus="this.value='';">    
+            <h2>Resposta correta</h2>
+            <input type="text" placeholder="Resposta correta" onfocus="this.value='';">
+            <input type="text" placeholder="URL da imagem" onfocus="this.value='';"> 
+            <h2>Respostas incorretas</h2>
+            <div class="resposta-incorreta">
+                <input type="text" placeholder="Resposta incorreta 1" onfocus="this.value='';">
+                <input type="text" placeholder="URL da imagem 1" onfocus="this.value='';"> 
+            </div>
+            <div class="resposta-incorreta">
+                <input type="text" placeholder="Resposta incorreta 2" onfocus="this.value='';">
+                <input type="text" placeholder="URL da imagem 2" onfocus="this.value='';"> 
+            </div>
+            <div class="resposta-incorreta">
+                <input type="text" placeholder="Resposta incorreta 3" onfocus="this.value='';">
+                <input type="text" placeholder="URL da imagem 3" onfocus="this.value='';"> 
+            </div>
+        </div>
+        <button>Prosseguir pra criar níveis</button>
+    </div>
+
+    <div class="definir-niveis escondido">
+        <span>Agora decida os níveis</span>
+        <div class="niveis">
+            <div class="numero-pergunta">
+                <h1>Nível 1</h1>
+                <ion-icon name="create-outline"></ion-icon>
+            </div>
+            <input type="text" placeholder="Título do nível" onfocus="this.value='';">
+            <input type="text" placeholder="% de acerto mínima" onfocus="this.value='';">
+            <input type="text" placeholder="URL da imagem do nível" onfocus="this.value='';">
+            <input type="text" placeholder="Descrição do nível" onfocus="this.value='';">
+        </div>
+        <button>Finalizar Quizz</button>
+    </div>
+
+    <div class="finalizar-criacao">
+        <span>Seu quizz está pronto!</span>
+        <div>
+
+        </div>
+        <button class="botao-acesso">Acessar Quizz</button>
+        <button class="botao-home">Voltar para home</button>
     </div>
 
 
