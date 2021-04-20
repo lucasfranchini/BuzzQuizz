@@ -62,6 +62,7 @@ function popularPerguntas(pergunta,indice){
 
 function darResposta(respostaClicada){
     const totalRespostas =respostaClicada.parentNode.children;
+    const pergunta = respostaClicada.parentNode.parentNode;
     if(respostaClicada.parentNode.id !== "respondido"){
         for(let i=0;i<totalRespostas.length;i++){
             if(totalRespostas[i].id==="false"){
@@ -74,8 +75,11 @@ function darResposta(respostaClicada){
         }
         respostaClicada.style.opacity = '1';
         respostaClicada.parentNode.id = 'respondido';
+        setTimeout(proximaPergunta,3000,pergunta)
     }
-
+}
+function proximaPergunta(pergunta){
+    pergunta.nextElementSibling.scrollIntoView({behavior: "smooth"});
 }
 
 function comparador() { 
