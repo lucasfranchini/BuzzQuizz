@@ -75,7 +75,7 @@ function darResposta(respostaClicada){
         }
         respostaClicada.style.opacity = '1';
         respostaClicada.parentNode.id = 'respondido';
-        setTimeout(proximaPergunta,3000,pergunta)
+        setTimeout(proximaPergunta,2000,pergunta)
     }
 }
 function proximaPergunta(pergunta){
