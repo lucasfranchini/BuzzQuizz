@@ -49,6 +49,7 @@ table {
 *{
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
+	word-break: break-word;
 }
 strong{
     font-weight: 700;

@@ -175,13 +175,26 @@ li img{
       flex-direction: column;
       align-items: center;
   }
-  .todos-quizzes span {
-      width: 340px;
-  }
   ul{
-      flex-direction: column;
+      justify-content: center;
   }
   li{
       width: 340px;
+      margin-left: 15px;
   }  
+}
+@media(max-width:750px){
+.todos-quizzes span{
+    width: 340px;
+}
+}
+
+@media(max-width:340px){
+    li{
+        width: calc(100% - 34px);
+        
+    }  
+    .todos-quizzes span{
+        width: calc(100% - 34px);
+    }
 }
