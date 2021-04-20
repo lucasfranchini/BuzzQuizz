@@ -61,6 +61,10 @@ body{
 .todos-quizzes span {
     margin-bottom: 10px;
 }
+.todos-quizzes ul{
+    display: flex;
+    justify-content: space-between;
+}
 .todos-quizzes li{
     width: 340px;
     height: 181px;
