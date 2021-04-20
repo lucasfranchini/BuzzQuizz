@@ -12,7 +12,7 @@ function popularquizzes(resposta){
     for(let i=0;i<quizzes.length;i++){
         campoQuizz.innerHTML +=`
         <li id=${quizzes[i].id} onclick =" abrirQuizz(this)" >
-            <img src="${quizzes[i].image}" alt="">
+            <img src="${quizzes[i].image}">
             <div class="degrade"></div>
             <span>${quizzes[i].title}</span>
         </li>`;
@@ -36,31 +36,30 @@ function criarPaginaQuizz(resposta){
         <h1>${resposta.data.title}</h1>
     </div>`;
     const perguntas = resposta.data.questions;
-    console.log(perguntas);
     perguntas.forEach(popularPerguntas);
 }
 
-function popularPerguntas(pergunta){
+function popularPerguntas(pergunta,indice){
     const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
+    const respostas = pergunta.answers;
+    respostas.sort(comparador);
+    console.log(respostas);
     paginaQuizz.innerHTML +=`
     <div class="pergunta">
         <div class="titulo-pergunta" style="background-color:${pergunta.color}">
             <span>${pergunta.title}</span>
         </div>
         <div class="caixa-respostas">
-            <div class="resposta">
-
-            </div>
-            <div class="resposta">
-            </div>
-            
-            <div class="resposta">
-            </div>
-            
-            <div class="resposta">
-            </div>
         </div>
     </div>`;
+    const campoResposta = document.querySelectorAll(".caixa-respostas")[indice];
+    for(let i=0;i<respostas.length;i++){
+        campoResposta.innerHTML += `
+        <div class="resposta" id="${respostas[i].isCorrectAnswer}">
+            <img src="${respostas[i].image}">
+            <span>${respostas[i].text}</span>
+        </div>`;
+    }
 }
 
 function comparador() { 
