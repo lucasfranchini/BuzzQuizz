@@ -167,14 +167,30 @@ li img{
     margin-top: 19px;
     background: blue;
 }
+
+
+
+
+
 .criar-quizzes{
     position: fixed;
     z-index: 1;
     margin: 140px auto 0 auto;
     width: 100%;
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.novo-quiz{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    align-items: center;
+    padding-top: 21px;
+    padding-bottom: 24px;
 }
 
 .criar-quizzes span{
@@ -212,6 +228,98 @@ li img{
     border-radius: 15px;
     font-size: 21px;
     color: #ffffff;
+}
+
+
+
+
+
+
+.criar-perguntas{
+    position: fixed;
+    z-index: 2;
+    margin: 140px auto 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.criar-perguntas span{
+    font-weight: 700;
+    font-size: 23px;
+    margin-bottom: 48px;
+}
+
+.perguntas input{
+    width: 564px;
+    height: 46px;
+    margin-bottom: 9px;
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+    font-size: 19px;
+    padding-left: 23px;
+}
+
+.perguntas input::placeholder{
+    font-style: italic;
+    font-size: 19px;
+}
+
+.perguntas input:focus{
+    outline: 0;
+    color: #000;
+}
+
+.criar-perguntas button{
+    margin-top: 81px;
+    width: 368px;
+    height: 54px;
+    background: #EC362D;
+    border: none;
+    border-radius: 15px;
+    font-size: 21px;
+    color: #ffffff;
+}
+
+.perguntas{
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 600px;
+    margin-bottom: 24px;
+}
+
+.numero-pergunta{
+    width: 560px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.numero-pergunta h1{
+    margin: 27px 0 12px 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.perguntas h2{
+    font-size: 20px;
+    font-weight: 700;
+    margin: 27px 0 12px 20px;
+    align-self: flex-start;
+}
+
+.perguntas ion-icon{
+    font-size: 26px;
+}
+
+.resposta-incorreta{
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
 }
 
 .escondido{
