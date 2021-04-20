@@ -15,23 +15,38 @@
     <div class="topo">
         <h1>BuzzQuizz</h1>
     </div>
-    <div class="meus-quizzes">
+    <div class="meus-quizzes escondido">
         <div class="cabecalho">
             <span>Seus Quizzes</span>
             <ion-icon name="add-circle"></ion-icon>
         </div>
-        <div class="nenhum-quizz">
+        <div class="nenhum-quizz escondido">
             <span>
                 Você não criou nenhum <br> quizz ainda :(
             </span>
             <button>Criar Quizz</button>
         </div>
     </div>
-    <div class="todos-quizzes">
+    <div class="todos-quizzes escondido">
         <span><strong>Todos os Quizzes</strong></span>
         <ul>
         </ul>
     </div>
+
+    <div class="criar-quizzes escondido">
+        <span>Comece pelo começo</span>
+        <input type="text" placeholder="Título do seu quizz" onfocus="this.value='';">
+        <input type="text" placeholder="URL da imagem do seu quizz" onfocus="this.value='';">
+        <input type="text" placeholder="Quantidade de perguntas do quizz" onfocus="this.value='';">
+        <input type="text" placeholder="Quantidade de níveis do quizz" onfocus="this.value='';">
+        <button>Prosseguir pra criar perguntas</button>
+    </div>
+
+    
+
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="scripts.js"></script>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
