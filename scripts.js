@@ -25,5 +25,5 @@ function abrirQuizz(quizz){
 }
 
 function criarPaginaQuizz(resposta){
-
+    console.log(resposta)
 }
