@@ -67,6 +67,7 @@ body{
     position: relative;
     border-radius: 5px;
     background-size: cover;
+    margin: 12px 0px;
 }
 .degrade{
     width: 100%;
@@ -86,6 +87,7 @@ li span{
     left: 20px;
     width: 301px;
     line-height: 22px;
+    
 }
 li img{
     border-radius: 5px;
