@@ -9,7 +9,6 @@ function popularquizzes(resposta){
     const quizzes = resposta.data;
     const campoQuizz = document.querySelector(".todos-quizzes ul");
     campoQuizz.innerHTML = "";
-    const degrade = "background-size: cover;"
     for(let i=0;i<quizzes.length;i++){
         campoQuizz.innerHTML +=`
         <li id=${quizzes[i].id} onclick =" abrirQuizz(this)" >
@@ -21,5 +20,10 @@ function popularquizzes(resposta){
 }
 
 function abrirQuizz(quizz){
-    console.log(quizz.id);
+    const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${quizz.id}`);
+    promise.then(criarPaginaQuizz);
+}
+
+function criarPaginaQuizz(resposta){
+
 }
