@@ -12,10 +12,14 @@ function popularquizzes(resposta){
     const degrade = "background-size: cover;"
     for(let i=0;i<quizzes.length;i++){
         campoQuizz.innerHTML +=`
-        <li id=${quizzes[i].id}>
+        <li id=${quizzes[i].id} onclick =" abrirQuizz(this)" >
             <img src="${quizzes[i].image}" alt="">
             <div class="degrade"></div>
             <span>${quizzes[i].title}</span>
         </li>`;
     }
+}
+
+function abrirQuizz(quizz){
+    console.log(quizz.id);
 }
