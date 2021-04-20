@@ -16,7 +16,7 @@ body{
     top: 0;
     left: 0;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-family: 'Roboto', sans-serif;
+    z-index: 1;
 }
 
 .meus-quizzes{
@@ -75,17 +75,18 @@ body{
 .todos-quizzes span {
     margin-bottom: 10px;
 }
-.todos-quizzes ul{
+ul{
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
-.todos-quizzes li{
+li{
     width: 340px;
     height: 181px;
     position: relative;
     border-radius: 5px;
     background-size: cover;
-    margin: 12px 0px;
+    margin-top: 12px;
 }
 .degrade{
     width: 100%;
@@ -112,4 +113,26 @@ li img{
 }
 .escondido{
     display: none;
+}
+
+@media(max-width:1100px){
+  .meus-quizzes{
+      width: calc(100% - 34px);
+  }
+  .todos-quizzes{
+      width:calc(100% - 34px);
+      margin-top: 35px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+  .todos-quizzes span {
+      width: 340px;
+  }
+  ul{
+      flex-direction: column;
+  }
+  li{
+      width: 340px;
+  }  
 }
