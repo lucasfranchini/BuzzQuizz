@@ -135,8 +135,7 @@ li img{
     color: #fff;
     line-height: 46px;
     flex-shrink: 0;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://img.quizur.com/f/img60229135637eb5.97078183.jpg?lastEdited=1612878137");
-    background-size: cover;
+    
 }
 .pergunta{
     width: 760px;
@@ -148,7 +147,6 @@ li img{
     margin-bottom: 70px;
 }
 .titulo-pergunta{
-    background-color: #FF0000;
     width: 690px;
     height: 140px;
     display: flex;
