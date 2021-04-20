@@ -134,11 +134,16 @@ li img{
       margin-left: 15px;
   }  
 }
+@media(max-width:750px){
+.todos-quizzes span{
+    width: 340px;
+}
+}
 
 @media(max-width:340px){
     li{
         width: calc(100% - 34px);
-        word-break: break-word;
+        
     }  
     .todos-quizzes span{
         width: calc(100% - 34px);
