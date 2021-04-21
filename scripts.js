@@ -171,7 +171,7 @@ function popularPerguntas(){
     }
 }
 
-function abrirMenuDados(){ //como resolve isso
+function abrirMenuDados(){
     const elemento = document.querySelector(".dados-pergunta");
     elemento.classList.remove("dropdown")
 
