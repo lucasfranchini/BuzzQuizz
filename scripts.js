@@ -1,4 +1,4 @@
-let numeroPerguntasRespondidas = 0, numeroPerguntasAcertadas = 0, numeroPerguntasTotal = 0, niveis = [];
+let numeroPerguntasRespondidas = 0, numeroPerguntasAcertadas = 0, numeroPerguntasTotal = 0, niveisQuizzAberto = [];
 
 pegarquizzes();
 
@@ -40,7 +40,7 @@ function criarPaginaQuizz(resposta){
     numeroPerguntasRespondidas = 0;
     numeroPerguntasAcertadas = 0;
     numeroPerguntasTotal = perguntas.length;
-    niveis = resposta.data.levels
+    niveisQuizzAberto = resposta.data.levels
     perguntas.forEach(popularPerguntas);
 }
 
@@ -98,9 +98,10 @@ function proximaPergunta(pergunta){
     }
     
 }
-function darResultado(){
+
+/*function darResultado(){
     const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
-}
+}*/
 
 
 
@@ -129,14 +130,13 @@ function validateURL(){
     '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
     '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
     resultado = !!pattern.test(url);
-
     prosseguirParaPerguntas();
 }
 
 function prosseguirParaPerguntas(){
     const titulo = document.querySelector(".titulo").value;
-    qnt_perguntas = document.querySelector(".quantidadePerguntas").value;
-    niveis = document.querySelector(".quantidadeNiveis").value;
+    qnt_perguntas = parseInt(document.querySelector(".quantidadePerguntas").value);
+    niveis = parseInt(document.querySelector(".quantidadeNiveis").value);
 
     if (resultado===false || titulo.length<20 || titulo.length>65 || qnt_perguntas<3 || niveis<2){
         alert("Preencha os dados corretamente");
@@ -163,7 +163,7 @@ function popularPerguntas(){
             <div class="perguntas">
                 <div class="numero-pergunta">
                     <h1>Pergunta ${i}</h1>
-                    <ion-icon onclick="abrirMenuDados()" name="create-outline"></ion-icon>
+                    <ion-icon onclick="abrirMenuDados(this)" name="create-outline"></ion-icon>
                 </div>
                 <div class="dados-pergunta dropdown">
                     <input type="text" placeholder="Texto da pergunta" onfocus="this.value='';">
@@ -190,12 +190,17 @@ function popularPerguntas(){
     }
 }
 
-function abrirMenuDados(){ //como resolve isso
-    const elemento = document.querySelector(".dados-pergunta");
-    elemento.classList.remove("dropdown")
-
-    const icone = document.querySelector(".perguntas ion-icon");
-    icone.classList.add("escondido")
+function abrirMenuDados(perguntaAberta){ // pega o elemento que voce clicou, que no caso é o ion-icon
+    const dadosPergunta = perguntaAberta.parentNode.nextElementSibling;// do ion-icon vai até a parte que fica com os dados daquela pergunta
+    const dadosTodasPerguntas = document.querySelectorAll(".dados-pergunta");//pega todos os dados de todas as perguntas
+    const icones = document.querySelectorAll(".numero-pergunta ion-icon");//pega todos os icones das perguntas
+    for(let i=0;i<dadosTodasPerguntas.length;i++){
+        dadosTodasPerguntas[i].classList.add("dropdown");//coloca o dropdown em todas as perguntas
+        icones[i].classList.remove("escondido");//remove o escondido das perguntas que não estão maximizadas
+    }
+    dadosPergunta.classList.remove("dropdown");// remove o dropdown só dos dados do ion-icon que voce clicou
+    dadosPergunta.parentNode.scrollIntoView();//sobe para o inicio daquela pergunta(desnecessario,mas eu estava querendo testar essa função)
+    perguntaAberta.classList.add("escondido");// esconde o ion-icon que voce clicou
 }
 
 function abrirMenuNiveis(){
