@@ -147,6 +147,7 @@ function sairQuizzAberto(){
     const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
     paginaQuizz.scrollTo(0,0);
     document.querySelector(".pagina-quizz-aberto").classList.add("escondido");
+    window.scrollTo(0,0);
 }
 
 
