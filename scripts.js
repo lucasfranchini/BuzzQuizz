@@ -79,7 +79,10 @@ function darResposta(respostaClicada){
     }
 }
 function proximaPergunta(pergunta){
-    pergunta.nextElementSibling.scrollIntoView({behavior: "smooth"});
+    if(pergunta.nextElementSibling !==null){
+        pergunta.nextElementSibling.scrollIntoView({behavior: "smooth"});
+    }
+    
 }
 
 function comparador() { 
