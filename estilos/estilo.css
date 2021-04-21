@@ -17,7 +17,7 @@ body{
     top: 0;
     left: 0;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    z-index: 2;
+    z-index: 11;
 }
 
 .meus-quizzes{
@@ -280,6 +280,7 @@ li img{
     font-size: 21px;
     color: #ffffff;
     flex-shrink: 0;
+    cursor: pointer;
 }
 .perguntas{
     background-color: #fff;
@@ -289,6 +290,7 @@ li img{
     align-items: center;
     width: 600px;
     padding-bottom: 10px;
+    margin-bottom: 24px;
 }
 .numero-pergunta{
     width: 560px;
@@ -310,6 +312,7 @@ li img{
 .perguntas ion-icon,
 .niveis ion-icon{
     font-size: 26px;
+    cursor: pointer;
 }
 .resposta-incorreta{
     margin-bottom: 32px;
