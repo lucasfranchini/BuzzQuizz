@@ -1,3 +1,5 @@
+let numeroPerguntasRespondidas = 0, numeroPerguntasAcertadas = 0, numeroPerguntasTotal = 0, niveis = [];
+
 pegarquizzes();
 
 function pegarquizzes (){
@@ -35,6 +37,10 @@ function criarPaginaQuizz(resposta){
         <h1>${resposta.data.title}</h1>
     </div>`;
     const perguntas = resposta.data.questions;
+    numeroPerguntasRespondidas = 0;
+    numeroPerguntasAcertadas = 0;
+    numeroPerguntasTotal = perguntas.length;
+    niveis = resposta.data.levels
     perguntas.forEach(popularPerguntas);
 }
 
@@ -75,15 +81,28 @@ function darResposta(respostaClicada){
         }
         respostaClicada.style.opacity = '1';
         respostaClicada.parentNode.id = 'respondido';
+        numeroPerguntasRespondidas++;
+        if(respostaClicada.id === "true"){
+            numeroPerguntasAcertadas++;
+        }
+        if(numeroPerguntasRespondidas === numeroPerguntasTotal){
+            darResultado();
+        }
         setTimeout(proximaPergunta,2000,pergunta)
     }
 }
+
 function proximaPergunta(pergunta){
     if(pergunta.nextElementSibling !==null){
         pergunta.nextElementSibling.scrollIntoView({behavior: "smooth"});
     }
     
 }
+function darResultado(){
+    const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
+}
+
+
 
 function comparador() { 
 	return Math.random() - 0.5; 
