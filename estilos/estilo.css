@@ -137,7 +137,6 @@ li img{
 }
 .pergunta{
     width: 760px;
-    height: 676px;
     background-color: #fff;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
     margin-top: 42px;
@@ -175,6 +174,42 @@ li img{
 }
 .resposta span{
     font-weight: 700;
+}
+.resultado{
+    width: 760px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    padding: 18px 14px 22px 18px;
+    margin-top: 44px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.titulo-resultado{
+    width: 727px;
+    height: 99px;
+    background-color: #EC362D;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 23px;
+    line-height: 27px;
+    color: #fff;
+    text-align: center;
+}
+.resultado img{
+    width: 364px;
+    height: 273px;
+    margin-right: 21px;
+}
+.descricao{
+    width: 328px;
+    height: 250px;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 25px;
+    color: #484848;
 }
 
 .informacoes-basicas,
