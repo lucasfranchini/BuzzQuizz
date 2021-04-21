@@ -141,7 +141,6 @@ li img{
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
     margin-top: 42px;
     padding: 28px 35px;
-    margin-bottom: 70px;
 }
 .titulo-pergunta{
     width: 690px;
@@ -162,15 +161,14 @@ li img{
 }
 .resposta{
     width: 330px;
-    height: 217px;
     margin-top: 19px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 .resposta img{
-    height: 175px;
     width: 100%;
+    height: calc(100% - 33px);
 }
 .resposta span{
     font-weight: 700;
@@ -236,7 +234,6 @@ li img{
 
 .descricao{
     width: 328px;
-    height: 250px;
     font-size: 19px;
     font-weight: 700;
     line-height: 25px;
@@ -420,14 +417,67 @@ li img{
   li:nth-child(3n-1){
     margin: 12px 0px 0 15px;
   }
+  .cabecalho-quizz{
+      height: 142px;
+      font-size: 19px;
+  }
+  .pergunta,.resultado{
+      width: 100%;
+      padding: 18px 18px 18px 23px;
+      margin-top: 28px;
+  }
+  .titulo-pergunta,.titulo-resultado{
+      width: 100%;
+      font-size: 19px;
+      line-height: 22px;
+  }
+  .resposta{
+      width: 49%;
+      margin-top: 12px;
+  }
+  .resposta img{
+      height: calc(100% - 24px);
+  }
+  .resposta span{
+      font-size: 13px;
+      line-height: 15px;
+  }
+  .resultado img{
+      width: 100%;
+  }
+  .descricao{
+      font-size: 17px;
+      line-height: 20px;
+      width: 100%;
+  }
+  .pagina-quizz-aberto button:nth-of-type(1){
+      width: 220px;
+      height: 44px;
+      font-size: 18px;
+      line-height: 21px;
+  }
+  .pagina-quizz-aberto button:nth-of-type(2){
+    font-size: 18px;
+    line-height: 21px;
+  }
 }
 @media(max-width:750px){
 .todos-quizzes span{
     width: 340px;
 }
+li{
+    margin-left: 0px;
+}
+li:nth-child(3n-1){
+    margin: 0;
+    margin-top: 12px;
+  } 
 }
 
-@media(max-width:340px){
+@media(max-width:400px){
+    .todos-quizzes span{
+        width: 100%;
+    }
     li{
         width: calc(100% - 34px);
         
