@@ -97,6 +97,8 @@ function comparador() {
 
 
 let resultado = true;
+let qnt_perguntas = 0;
+let niveis = 0;
 
 function validateURL(){
     const url = document.querySelector(".url").value
@@ -114,17 +116,62 @@ function validateURL(){
 
 function prosseguirParaPerguntas(){
     const titulo = document.querySelector(".titulo").value;
-    const qnt_perguntas = document.querySelector(".quantidadePerguntas").value;
-    const niveis = document.querySelector(".quantidadeNiveis").value;
+    qnt_perguntas = document.querySelector(".quantidadePerguntas").value;
+    niveis = document.querySelector(".quantidadeNiveis").value;
 
     if (resultado===false || titulo.length<20 || titulo.length>65 || qnt_perguntas<3 || niveis<2){
         alert("Preencha os dados corretamente");
     } else{
-        perguntas();
+        mudarPagina();
     }
 }
 
-function abrirMenuDados(){
+function mudarPagina(){
+    const pagInfos = document.querySelector(".informacoes-basicas");
+    pagInfos.classList.add("escondido");
+    const pagCriacao = document.querySelector(".criar-perguntas");
+    pagCriacao.classList.remove("escondido");
+    
+    popularPerguntas();
+}
+
+function popularPerguntas(){
+    const numPerguntas = document.querySelector(".caixaPergunta");
+    numPerguntas.innerHTML="";
+
+    for (i=1; i<=qnt_perguntas; i++){
+        numPerguntas.innerHTML+=`
+            <div class="perguntas">
+                <div class="numero-pergunta">
+                    <h1>Pergunta ${i}</h1>
+                    <ion-icon onclick="abrirMenuDados()" name="create-outline"></ion-icon>
+                </div>
+                <div class="dados-pergunta dropdown">
+                    <input type="text" placeholder="Texto da pergunta" onfocus="this.value='';">
+                    <input type="text" placeholder="Cor de fundo da pergunta" onfocus="this.value='';">    
+                    <h2>Resposta correta</h2>
+                    <input type="text" placeholder="Resposta correta" onfocus="this.value='';">
+                    <input type="text" placeholder="URL da imagem" onfocus="this.value='';"> 
+                    <h2>Respostas incorretas</h2>
+                    <div class="resposta-incorreta">
+                        <input type="text" placeholder="Resposta incorreta 1" onfocus="this.value='';">
+                        <input type="text" placeholder="URL da imagem 1" onfocus="this.value='';"> 
+                    </div>
+                    <div class="resposta-incorreta">
+                        <input type="text" placeholder="Resposta incorreta 2" onfocus="this.value='';">
+                        <input type="text" placeholder="URL da imagem 2" onfocus="this.value='';"> 
+                    </div>
+                    <div class="resposta-incorreta">
+                        <input type="text" placeholder="Resposta incorreta 3" onfocus="this.value='';">
+                        <input type="text" placeholder="URL da imagem 3" onfocus="this.value='';"> 
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+function abrirMenuDados(){ //como resolve isso
     const elemento = document.querySelector(".dados-pergunta");
     elemento.classList.remove("dropdown")
 
