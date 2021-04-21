@@ -1,4 +1,4 @@
-let numeroPerguntasRespondidas = 0, numeroPerguntasAcertadas = 0, numeroPerguntasTotal = 0, niveisQuizzAberto = [];
+let numeroPerguntasRespondidas = 0, numeroPerguntasAcertadas = 0, numeroPerguntasTotal = 0, niveisQuizzAberto = [],idQuizzAberto=0;
 
 pegarquizzes();
 
@@ -24,6 +24,7 @@ function popularquizzes(resposta){
 function abrirQuizz(quizz){
     const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${quizz.id}`);
     promise.then(criarPaginaQuizz);
+    idQuizzAberto=quizz.id;
 }
 
 function criarPaginaQuizz(resposta){
@@ -41,10 +42,10 @@ function criarPaginaQuizz(resposta){
     numeroPerguntasAcertadas = 0;
     numeroPerguntasTotal = perguntas.length;
     niveisQuizzAberto = resposta.data.levels
-    perguntas.forEach(popularPerguntas);
+    perguntas.forEach(popularPerguntasQuizzAberto);
 }
 
-function popularPerguntas(pergunta,indice){
+function popularPerguntasQuizzAberto(pergunta,indice){
     const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
     const respostas = pergunta.answers;
     respostas.sort(comparador);
@@ -88,21 +89,65 @@ function darResposta(respostaClicada){
         if(numeroPerguntasRespondidas === numeroPerguntasTotal){
             darResultado();
         }
-        setTimeout(proximaPergunta,2000,pergunta)
+        setTimeout(proximoElemento,2000,pergunta)
     }
 }
 
-function proximaPergunta(pergunta){
-    if(pergunta.nextElementSibling !==null){
-        pergunta.nextElementSibling.scrollIntoView({behavior: "smooth"});
+function proximoElemento(elemento){
+    if(elemento.nextElementSibling !==null){
+        elemento.nextElementSibling.scrollIntoView({behavior: "smooth"});
     }
-    
+    if(elemento.classList.value === "resultado"){
+        elemento.scrollIntoView({behavior: "smooth"})
+    }
 }
 
-/*function darResultado(){
+function darResultado(){
     const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
-}*/
+    const acertosPorcentagem = Math.round((numeroPerguntasAcertadas/numeroPerguntasTotal)*100);
+    const resultadoAlcancado = niveisQuizzAberto.find(descobrirResultado);
+    paginaQuizz.innerHTML += `
+    <div class="resultado">
+        <div class="titulo-resultado">
+            <span >${acertosPorcentagem}% de acerto: ${resultadoAlcancado.title}</span>
+        </div>
+        <img src="${resultadoAlcancado.image}">
+        <span class="descricao">${resultadoAlcancado.text}</span>
+    </div>
+    <button onclick="reiniciarQuizzAberto()">Reiniciar Quizz</button>
+    <button onclick="sairQuizzAberto()">Voltar pra home</button>`;
+    const resultado = document.querySelector(".resultado");
+    setTimeout(proximoElemento,2000,resultado);
+}
+function descobrirResultado(possivelResultado,indice){
+    const acertosPorcentagem = Math.round((numeroPerguntasAcertadas/numeroPerguntasTotal)*100);
+    let maxValue;
+    if(indice+1 === niveisQuizzAberto.length){
+        maxValue = 101;
+    }
+    else{
+        maxValue = niveisQuizzAberto[indice+1].minValue
+    }
+    if(acertosPorcentagem>=possivelResultado.minValue && acertosPorcentagem<maxValue){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
+function reiniciarQuizzAberto(){
+    const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${idQuizzAberto}`);
+    promise.then(criarPaginaQuizz);
+    const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
+    paginaQuizz.scrollTo(0,0);
+}
+
+function sairQuizzAberto(){
+    const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
+    paginaQuizz.scrollTo(0,0);
+    document.querySelector(".pagina-quizz-aberto").classList.add("escondido");
+}
 
 
 function comparador() { 
