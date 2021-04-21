@@ -41,7 +41,7 @@ function criarPaginaQuizz(resposta){
     numeroPerguntasRespondidas = 0;
     numeroPerguntasAcertadas = 0;
     numeroPerguntasTotal = perguntas.length;
-    niveisQuizzAberto = resposta.data.levels
+    niveisQuizzAberto = resposta.data.levels;
     perguntas.forEach(popularPerguntasQuizzAberto);
 }
 
