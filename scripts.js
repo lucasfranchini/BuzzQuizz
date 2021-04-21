@@ -96,6 +96,33 @@ function comparador() {
 
 
 
+let resultado = true;
+
+function validateURL(){
+    const url = document.querySelector(".url").value
+
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    resultado = !!pattern.test(url);
+
+    prosseguirParaPerguntas();
+}
+
+function prosseguirParaPerguntas(){
+    const titulo = document.querySelector(".titulo").value;
+    const qnt_perguntas = document.querySelector(".quantidadePerguntas").value;
+    const niveis = document.querySelector(".quantidadeNiveis").value;
+
+    if (resultado===false || titulo.length<20 || titulo.length>65 || qnt_perguntas<3 || niveis<2){
+        alert("Preencha os dados corretamente");
+    } else{
+        perguntas();
+    }
+}
 
 function abrirMenuDados(){
     const elemento = document.querySelector(".dados-pergunta");
