@@ -182,7 +182,6 @@ li img{
 .definir-niveis,
 .finalizar-criacao{
     position: fixed;
-    z-index: 2;
     margin: 69px auto 0 auto;
     width: 100%;
     display: flex;
@@ -254,7 +253,7 @@ li img{
     flex-direction: column;
     align-items: center;
     width: 600px;
-    margin-bottom: 24px;
+    padding-bottom: 10px;
 }
 .numero-pergunta{
     width: 560px;
@@ -282,7 +281,7 @@ li img{
     display: flex;
     flex-direction: column;
 }
-.dados-pergunta{
+.dados-pergunta, .dados-nivel{
     margin-left: 18px;
 }
 .dropdown{
@@ -296,8 +295,7 @@ li img{
     flex-direction: column;
     align-items: center;
     width: 600px;
-    margin-bottom: 24px;
-    padding-bottom: 28px;
+    padding-bottom: 10px;
 }
 .finalizar-criacao div{
     width: 500px;
@@ -314,7 +312,18 @@ li img{
     background-color: #fff;
     margin-top: 9px;
 }
-
+.informacoes-basicas{
+    z-index: 10;
+}
+.criar-perguntas{
+    z-index: 9;
+}
+.definir-niveis{
+    z-index: 8;
+}
+.finalizar-criacao{
+    z-index: 7;
+}
 
 
 
@@ -341,7 +350,7 @@ li img{
   }  
   li:nth-child(3n-1){
     margin: 12px 0px 0 15px;
-}
+  }
 }
 @media(max-width:750px){
 .todos-quizzes span{

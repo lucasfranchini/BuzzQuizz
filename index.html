@@ -16,7 +16,7 @@
         <div class="topo">
             <h1>BuzzQuizz</h1>
         </div>
-        <div class="meus-quizzes">
+        <div class="meus-quizzes escondido">
             <div class="cabecalho escondido">
                 <span>Seus Quizzes</span>
                 <ion-icon name="add-circle"></ion-icon>
@@ -28,7 +28,7 @@
                 <button>Criar Quizz</button>
             </div>
         </div>
-        <div class="todos-quizzes">
+        <div class="todos-quizzes escondido">
             <span><strong>Todos os Quizzes</strong></span>
             <ul>
             </ul>
@@ -38,16 +38,16 @@
     </div>
     <div class="informacoes-basicas escondido">
         <span>Comece pelo começo</span>
-        <div class="novo-quiz">
-            <input type="text" placeholder="Título do seu quizz" onfocus="this.value='';">
-            <input type="text" placeholder="URL da imagem do seu quizz" onfocus="this.value='';">
-            <input type="text" placeholder="Quantidade de perguntas do quizz" onfocus="this.value='';">
-            <input type="text" placeholder="Quantidade de níveis do quizz" onfocus="this.value='';">
-        </div>
-        <button>Prosseguir pra criar perguntas</button>
+        <form class="novo-quiz">
+            <input type="text" class="titulo" placeholder="Título do seu quizz" onfocus="this.value='';" required>
+            <input type="url" class="url" placeholder="URL da imagem do seu quizz" pattern="https://.*" onfocus="this.value='';" required>
+            <input type="number" class="quantidadePerguntas" placeholder="Quantidade de perguntas do quizz" onfocus="this.value='';" required>
+            <input type="number" class="quantidadeNiveis" placeholder="Quantidade de níveis do quizz" onfocus="this.value='';" required>
+        </form>      
+        <button onclick="prosseguirParaPerguntas()">Prosseguir pra criar perguntas</button>
     </div>
 
-    <div class="criar-perguntas escondido">
+    <div class="criar-perguntas">
         <span>Crie suas perguntas</span>
         <div class="perguntas">
             <div class="numero-pergunta">
@@ -83,12 +83,14 @@
         <div class="niveis">
             <div class="numero-pergunta">
                 <h1>Nível 1</h1>
-                <ion-icon name="create-outline"></ion-icon>
+                <ion-icon onclick="abrirMenuNiveis()" name="create-outline"></ion-icon>
             </div>
-            <input type="text" placeholder="Título do nível" onfocus="this.value='';">
-            <input type="text" placeholder="% de acerto mínima" onfocus="this.value='';">
-            <input type="text" placeholder="URL da imagem do nível" onfocus="this.value='';">
-            <input type="text" placeholder="Descrição do nível" onfocus="this.value='';">
+            <div class="dados-nivel dropdown">
+                <input type="text" placeholder="Título do nível" onfocus="this.value='';">
+                <input type="text" placeholder="% de acerto mínima" onfocus="this.value='';">
+                <input type="text" placeholder="URL da imagem do nível" onfocus="this.value='';">
+                <input type="text" placeholder="Descrição do nível" onfocus="this.value='';">
+            </div>
         </div>
         <button>Finalizar Quizz</button>
     </div>

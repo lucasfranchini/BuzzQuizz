@@ -89,7 +89,26 @@ function comparador() {
 	return Math.random() - 0.5; 
 }
 
+
+
+
+
+
+
+
+
 function abrirMenuDados(){
     const elemento = document.querySelector(".dados-pergunta");
     elemento.classList.remove("dropdown")
+
+    const icone = document.querySelector(".perguntas ion-icon");
+    icone.classList.add("escondido")
+}
+
+function abrirMenuNiveis(){
+    const elemento = document.querySelector(".dados-nivel");
+    elemento.classList.remove("dropdown")
+
+    const icone = document.querySelector(".niveis ion-icon");
+    icone.classList.add("escondido")
 }
