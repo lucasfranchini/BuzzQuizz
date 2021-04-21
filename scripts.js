@@ -25,7 +25,6 @@ function abrirQuizz(quizz){
 }
 
 function criarPaginaQuizz(resposta){
-    console.log(resposta)
     const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
     paginaQuizz.classList.remove("escondido");
     const background = `
@@ -43,7 +42,6 @@ function popularPerguntas(pergunta,indice){
     const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
     const respostas = pergunta.answers;
     respostas.sort(comparador);
-    console.log(respostas);
     paginaQuizz.innerHTML +=`
     <div class="pergunta">
         <div class="titulo-pergunta" style="background-color:${pergunta.color}">
@@ -55,11 +53,33 @@ function popularPerguntas(pergunta,indice){
     const campoResposta = document.querySelectorAll(".caixa-respostas")[indice];
     for(let i=0;i<respostas.length;i++){
         campoResposta.innerHTML += `
-        <div class="resposta" id="${respostas[i].isCorrectAnswer}">
+        <div class="resposta" id="${respostas[i].isCorrectAnswer}"onclick="darResposta(this)">
             <img src="${respostas[i].image}">
             <span>${respostas[i].text}</span>
         </div>`;
     }
+}
+
+function darResposta(respostaClicada){
+    const totalRespostas =respostaClicada.parentNode.children;
+    const pergunta = respostaClicada.parentNode.parentNode;
+    if(respostaClicada.parentNode.id !== "respondido"){
+        for(let i=0;i<totalRespostas.length;i++){
+            if(totalRespostas[i].id==="false"){
+                totalRespostas[i].style.color = '#FF4B4B';
+            }
+            else{
+                totalRespostas[i].style.color = '#009C22';
+            }
+            totalRespostas[i].style.opacity = '0.3';
+        }
+        respostaClicada.style.opacity = '1';
+        respostaClicada.parentNode.id = 'respondido';
+        setTimeout(proximaPergunta,2000,pergunta)
+    }
+}
+function proximaPergunta(pergunta){
+    pergunta.nextElementSibling.scrollIntoView({behavior: "smooth"});
 }
 
 function comparador() { 
