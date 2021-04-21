@@ -65,3 +65,8 @@ function popularPerguntas(pergunta,indice){
 function comparador() { 
 	return Math.random() - 0.5; 
 }
+
+function abrirMenuDados(){
+    const elemento = document.querySelector(".dados-pergunta");
+    elemento.classList.remove("dropdown")
+}
