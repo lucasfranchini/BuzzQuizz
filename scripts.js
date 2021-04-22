@@ -165,11 +165,11 @@ function prosseguirParaPerguntas(){
     if (!validateURL(url) || titulo.length<20 || titulo.length>65 || qnt_perguntas<3 || niveis<2){
         alert("Preencha os dados corretamente");
     } else{
-        mudarPagina();
+        irParaPerguntas();
     }
 }
 
-function mudarPagina(){
+function irParaPerguntas(){
     const pagInfos = document.querySelector(".informacoes-basicas");
     pagInfos.classList.add("escondido");
     const pagCriacao = document.querySelector(".criar-perguntas");
@@ -196,16 +196,16 @@ function popularPerguntas(){
                     <input type="text" class="correta" placeholder="Resposta correta" onfocus="this.value='';" required>
                     <input type="text" class="urlResposta" placeholder="URL da imagem" onfocus="this.value='';" required> 
                     <h2>Respostas incorretas</h2>
-                    <div class="resposta-incorreta inc1">
-                        <input type="text" placeholder="Resposta incorreta 1" onfocus="this.value='';">
+                    <div class="resposta-incorreta">
+                        <input type="text" class="incorrreta1" placeholder="Resposta incorreta 1" onfocus="this.value='';">
                         <input type="text" placeholder="URL da imagem 1" onfocus="this.value='';"> 
                     </div>
-                    <div class="resposta-incorreta inc2">
-                        <input type="text" placeholder="Resposta incorreta 2" onfocus="this.value='';">
+                    <div class="resposta-incorreta">
+                        <input type="text" class="incorrreta2" placeholder="Resposta incorreta 2" onfocus="this.value='';">
                         <input type="text" placeholder="URL da imagem 2" onfocus="this.value='';"> 
                     </div>
-                    <div class="resposta-incorreta inc3">
-                        <input type="text" placeholder="Resposta incorreta 3" onfocus="this.value='';">
+                    <div class="resposta-incorreta">
+                        <input type="text" class="incorrreta3" placeholder="Resposta incorreta 3" onfocus="this.value='';">
                         <input type="text" placeholder="URL da imagem 3" onfocus="this.value='';"> 
                     </div>
                 </div>
@@ -235,15 +235,36 @@ function prosseguirParaNiveis(){
         const respostaCorreta = pergunta.querySelector(".dados-pergunta .correta").value;
         const urlResposta = pergunta.querySelector(".dados-pergunta .urlResposta").value;
 
-        if (texto.length<20 || !isHexColor(cor) || respostaCorreta==="" || !validateURL(urlResposta) || (pergunta.querySelector(".inc1").value==="" && pergunta.querySelector(".inc2").value==="" && pergunta.querySelector(".inc3").value==="")){
+        if (texto.length<20){
             alert("Preencha os dados corretamente");
-        } else{
-            passarPag();
+            return;
+        }
+
+        if (!isHexColor(cor)){
+            alert("Preencha os dados corretamente");
+            return;
+        }
+
+        if (respostaCorreta===""){
+            alert("Preencha os dados corretamente");
+            return;
+        }
+
+        if (!validateURL(urlResposta)){
+            alert("Preencha os dados corretamente");
+            return;
+        }
+        
+        if (pergunta.querySelector(".incorreta1").value==="" && pergunta.querySelector(".incorreta2").value==="" && pergunta.querySelector(".incorreta3").value===""){
+            alert("Preencha os dados corretamente");
+            return;
         }
     }
+
+    irParaNiveis();
 }
 
-function passarPag(){
+function irParaNiveis(){
     const pagCriacao = document.querySelector(".criar-perguntas");
     pagCriacao.classList.add("escondido");
     const pagNiveis = document.querySelector(".definir-niveis");
@@ -266,7 +287,7 @@ function popularNiveis(){
                 <div class="dados-nivel dropdown">
                     <input type="text" class="titulo" placeholder="Título do nível" onfocus="this.value='';">
                     <input type="number" class="porcentagem" placeholder="% de acerto mínima" max=100 min=0 onfocus="this.value='';">
-                    <input type="url" class="imagem" placeholder="URL da imagem do nível" onfocus="this.value='';">
+                    <input type="url" class="urlImagem" placeholder="URL da imagem do nível" onfocus="this.value='';">
                     <input type="text" class="descricao" placeholder="Descrição do nível" onfocus="this.value='';">
                 </div>
             </div>   
@@ -294,11 +315,41 @@ function finalizarQuizz(){
         const nivel = document.querySelector(".nivel"+i);
         const titulo = nivel.querySelector(".titulo").value;
         const porcentagem = nivel.querySelector(".porcentagem").value;
-        const imagem = nivel.querySelector(".imagem").value;
+        const porcentagens = [];
+        const urlImagem = nivel.querySelector(".imagem").value;
         const descricao = nivel.querySelector(".descricao").value;
 
+        porcentagens.push(porcentagem);
+
+        if (titulo.length<10){
+            alert("Preencha os dados corretamente");
+            return;
+        }
+
+        if (porcentagem<0 || porcentagem>100 || porcentagem===""){
+            alert("Preencha os dados corretamente");
+            return;
+        }
+
+        if (!validateURL(urlImagem)){
+            alert("Preencha os dados corretamente");
+            return;
+        }
+
+        if (descricao<30){
+            alert("Preencha os dados corretamente");
+            return;
+        }
+    }
+    
+    for (i=1; i<=niveis; i++){
+        if (porcentagens[i]!==0){
+            alert("Preencha os dados corretamente");
+            return;
+        }
     }
 
+    irParaFinalizacao();
 }
 
 
