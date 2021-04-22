@@ -89,16 +89,11 @@ function darResposta(respostaClicada){
         if(numeroPerguntasRespondidas === numeroPerguntasTotal){
             darResultado();
         }
-        setTimeout(proximoElemento,2000,pergunta)
-    }
-}
-
-function proximoElemento(elemento){
-    if(elemento.nextElementSibling !==null){
-        elemento.nextElementSibling.scrollIntoView({behavior: "smooth"});
-    }
-    if(elemento.classList.value === "resultado"){
-        elemento.scrollIntoView({behavior: "smooth"})
+        setTimeout(function(elemento){
+            if(elemento.nextElementSibling !==null){
+                elemento.nextElementSibling.scrollIntoView({behavior: "smooth"});
+            }
+        },2000,pergunta);
     }
 }
 
@@ -116,8 +111,9 @@ function darResultado(){
     </div>
     <button onclick="reiniciarQuizzAberto()">Reiniciar Quizz</button>
     <button onclick="sairQuizzAberto()">Voltar pra home</button>`;
-    const resultado = document.querySelector(".resultado");
-    setTimeout(proximoElemento,2000,resultado);
+    setTimeout(function(){
+        document.querySelector(".resultado").scrollIntoView({behavior: "smooth"});
+    },2000);
 }
 function descobrirResultado(possivelResultado,indice){
     const acertosPorcentagem = Math.round((numeroPerguntasAcertadas/numeroPerguntasTotal)*100);
