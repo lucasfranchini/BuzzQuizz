@@ -116,29 +116,16 @@ function comparador() {
 
 
 
-let resultado = true;
 let qnt_perguntas = 0;
 let niveis = 0;
 
-function validateURL(){
-    const url = document.querySelector(".url").value
-
-    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-    resultado = !!pattern.test(url);
-    prosseguirParaPerguntas();
-}
-
 function prosseguirParaPerguntas(){
     const titulo = document.querySelector(".titulo").value;
+    const url = document.querySelector(".url").value
     qnt_perguntas = parseInt(document.querySelector(".quantidadePerguntas").value);
     niveis = parseInt(document.querySelector(".quantidadeNiveis").value);
 
-    if (resultado===false || titulo.length<20 || titulo.length>65 || qnt_perguntas<3 || niveis<2){
+    if (!validateURL(url) || titulo.length<20 || titulo.length>65 || qnt_perguntas<3 || niveis<2){
         alert("Preencha os dados corretamente");
     } else{
         mudarPagina();
@@ -160,27 +147,27 @@ function popularPerguntas(){
 
     for (i=1; i<=qnt_perguntas; i++){
         numPerguntas.innerHTML+=`
-            <div class="perguntas">
+            <div class="perguntas pergunta${i}">
                 <div class="numero-pergunta">
                     <h1>Pergunta ${i}</h1>
                     <ion-icon onclick="abrirMenuDados(this)" name="create-outline"></ion-icon>
                 </div>
                 <div class="dados-pergunta dropdown">
-                    <input type="text" placeholder="Texto da pergunta" onfocus="this.value='';">
-                    <input type="text" placeholder="Cor de fundo da pergunta" onfocus="this.value='';">    
+                    <input type="text" class="texto" placeholder="Texto da pergunta" onfocus="this.value='';">
+                    <input type="text" class="cor" placeholder="Cor de fundo da pergunta" onfocus="this.value='';">    
                     <h2>Resposta correta</h2>
-                    <input type="text" placeholder="Resposta correta" onfocus="this.value='';">
-                    <input type="text" placeholder="URL da imagem" onfocus="this.value='';"> 
+                    <input type="text" class="correta" placeholder="Resposta correta" onfocus="this.value='';" required>
+                    <input type="text" class="urlResposta" placeholder="URL da imagem" onfocus="this.value='';" required> 
                     <h2>Respostas incorretas</h2>
-                    <div class="resposta-incorreta">
+                    <div class="resposta-incorreta inc1">
                         <input type="text" placeholder="Resposta incorreta 1" onfocus="this.value='';">
                         <input type="text" placeholder="URL da imagem 1" onfocus="this.value='';"> 
                     </div>
-                    <div class="resposta-incorreta">
+                    <div class="resposta-incorreta inc2">
                         <input type="text" placeholder="Resposta incorreta 2" onfocus="this.value='';">
                         <input type="text" placeholder="URL da imagem 2" onfocus="this.value='';"> 
                     </div>
-                    <div class="resposta-incorreta">
+                    <div class="resposta-incorreta inc3">
                         <input type="text" placeholder="Resposta incorreta 3" onfocus="this.value='';">
                         <input type="text" placeholder="URL da imagem 3" onfocus="this.value='';"> 
                     </div>
@@ -189,7 +176,6 @@ function popularPerguntas(){
         `;
     }
 }
-
 
 function abrirMenuDados(perguntaAberta){ // pega o elemento que voce clicou, que no caso é o ion-icon
     const dadosPergunta = perguntaAberta.parentNode.nextElementSibling;// do ion-icon vai até a parte que fica com os dados daquela pergunta
@@ -204,10 +190,97 @@ function abrirMenuDados(perguntaAberta){ // pega o elemento que voce clicou, que
     perguntaAberta.classList.add("escondido");// esconde o ion-icon que voce clicou
 }
 
-function abrirMenuNiveis(){
-    const elemento = document.querySelector(".dados-nivel");
-    elemento.classList.remove("dropdown")
+function prosseguirParaNiveis(){
+    for(let i=1; i<=qnt_perguntas; i++){
+        const pergunta = document.querySelector(".pergunta"+i);
+        const texto = pergunta.querySelector(".dados-pergunta .texto").value;
+        const cor = pergunta.querySelector(".dados-pergunta .cor").value;
+        const respostaCorreta = pergunta.querySelector("dados-pergunta .correta").value;
+        const urlResposta = pergunta.querySelector("dados-pergunta .urlResposta").value;
 
-    const icone = document.querySelector(".niveis ion-icon");
-    icone.classList.add("escondido")
+        if (texto.length<20 || !isHexColor(cor) || respostaCorreta==="" || !validateURL(urlResposta) || (pergunta.querySelector(".inc1").value==="" && pergunta.querySelector(".inc2").value==="" && pergunta.querySelector(".inc3").value==="")){
+            alert("Preencha os dados corretamente");
+        } else{
+            passarPag();
+        }
+    }
+}
+
+function passarPag(){
+    const pagCriacao = document.querySelector(".criar-perguntas");
+    pagCriacao.classList.add("escondido");
+    const pagNiveis = document.querySelector(".definir-niveis");
+    pagNiveis.classList.remove("escondido");
+
+    popularNiveis();
+}
+
+function popularNiveis(){
+    const numNiveis = document.querySelector(".caixa-niveis");
+    numNiveis.innerHTML = "";
+
+    for (i=1; i<=niveis; i++){
+        numNiveis.innerHTML+= `
+            <div class="niveis nivel${i}">
+                <div class="numero-pergunta">
+                    <h1>Nível ${i}</h1>
+                    <ion-icon onclick="abrirMenuNiveis(this)" name="create-outline"></ion-icon>
+                </div>
+                <div class="dados-nivel dropdown">
+                    <input type="text" class="titulo" placeholder="Título do nível" onfocus="this.value='';">
+                    <input type="number" class="porcentagem" placeholder="% de acerto mínima" max=100 min=0 onfocus="this.value='';">
+                    <input type="url" class="imagem" placeholder="URL da imagem do nível" onfocus="this.value='';">
+                    <input type="text" class="descricao" placeholder="Descrição do nível" onfocus="this.value='';">
+                </div>
+            </div>   
+        `;
+    }
+}
+
+function abrirMenuNiveis(nivelAberto){
+    const dadosNivel = nivelAberto.parentNode.nextElementSibling;
+    const dadosTodosNiveis = document.querySelectorAll(".dados-nivel");
+    const icones = document.querySelectorAll(".numero-pergunta ion-icon");
+    
+    for(let i=0;i<dadosTodosNiveis.length;i++){
+        dadosTodosNiveis[i].classList.add("dropdown");
+        icones[i].classList.remove("escondido");
+    }
+
+    dadosNivel.classList.remove("dropdown");
+    dadosNivel.parentNode.scrollIntoView();
+    nivelAberto.classList.add("escondido");
+}
+
+function finalizarQuizz(){
+    for (i=1; i<=niveis; i++){
+        const nivel = document.querySelector(".nivel"+i);
+        const titulo = nivel.querySelector(".titulo").value;
+        const porcentagem = nivel.querySelector(".porcentagem").value;
+        const imagem = nivel.querySelector(".imagem").value;
+        const descricao = nivel.querySelector(".descricao").value;
+
+    }
+
+}
+
+
+
+
+
+function validateURL(str){
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    return !!pattern.test(str);
+}
+
+function isHexColor (str) {   
+    if (!/^#[0-9A-F]{6}$/i.test(str)){
+        return false;
+    }
+    return true;
 }
