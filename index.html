@@ -12,10 +12,10 @@
     <title>BuzzQuizz</title>
 </head>
 <body>
-    <div class="pagina-inicial">
-        <div class="topo">
-            <h1>BuzzQuizz</h1>
-        </div>
+    <div class="topo">
+        <h1>BuzzQuizz</h1>
+    </div>
+    <div class="pagina-inicial escondido">
         <div class="meus-quizzes ">
             <div class="cabecalho escondido">
                 <span>Seus Quizzes</span>
@@ -37,7 +37,7 @@
     <div class="pagina-quizz-aberto escondido">
         
     </div>
-    <div class="informacoes-basicas escondido">
+    <div class="informacoes-basicas ">
         <span>Comece pelo começo</span>
         <form class="novo-quiz">
             <input type="text" class="titulo" placeholder="Título do seu quizz" onfocus="this.value='';" required>
@@ -56,7 +56,7 @@
         <button onclick="prosseguirParaNiveis()">Prosseguir pra criar níveis</button>
     </div>
 
-    <div class="definir-niveis">
+    <div class="definir-niveis escondido">
         <span>Agora decida os níveis</span>
         <div class="caixa-niveis">
             

@@ -241,8 +241,8 @@ function prosseguirParaNiveis(){
         const pergunta = document.querySelector(".pergunta"+i);
         const texto = pergunta.querySelector(".dados-pergunta .texto").value;
         const cor = pergunta.querySelector(".dados-pergunta .cor").value;
-        const respostaCorreta = pergunta.querySelector("dados-pergunta .correta").value;
-        const urlResposta = pergunta.querySelector("dados-pergunta .urlResposta").value;
+        const respostaCorreta = pergunta.querySelector(".dados-pergunta .correta").value;
+        const urlResposta = pergunta.querySelector(".dados-pergunta .urlResposta").value;
 
         if (texto.length<20 || !isHexColor(cor) || respostaCorreta==="" || !validateURL(urlResposta) || (pergunta.querySelector(".inc1").value==="" && pergunta.querySelector(".inc2").value==="" && pergunta.querySelector(".inc3").value==="")){
             alert("Preencha os dados corretamente");
