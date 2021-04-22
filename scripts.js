@@ -128,12 +128,8 @@ function descobrirResultado(possivelResultado,indice){
     else{
         maxValue = niveisQuizzAberto[indice+1].minValue
     }
-    if(acertosPorcentagem>=possivelResultado.minValue && acertosPorcentagem<maxValue){
-        return true;
-    }
-    else{
-        return false;
-    }
+    return (acertosPorcentagem>=possivelResultado.minValue && acertosPorcentagem<maxValue);
+
 }
 
 function reiniciarQuizzAberto(){
