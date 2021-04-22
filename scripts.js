@@ -111,10 +111,9 @@ function darResultado(){
     </div>
     <button onclick="reiniciarQuizzAberto()">Reiniciar Quizz</button>
     <button onclick="sairQuizzAberto()">Voltar pra home</button>`;
-    setTimeout(function(){
-        document.querySelector(".resultado").scrollIntoView({behavior: "smooth"});
-    },2000);
+    setTimeout(()=>document.querySelector(".resultado").scrollIntoView({behavior: "smooth"}),2000);
 }
+
 function descobrirResultado(possivelResultado,indice){
     const acertosPorcentagem = Math.round((numeroPerguntasAcertadas/numeroPerguntasTotal)*100);
     let maxValue;
