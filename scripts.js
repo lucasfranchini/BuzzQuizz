@@ -1,33 +1,69 @@
-let numeroPerguntasRespondidas = 0, numeroPerguntasAcertadas = 0, numeroPerguntasTotal = 0, niveisQuizzAberto = [],idQuizzAberto=0;
-
+let numeroPerguntasRespondidas = 0, numeroPerguntasAcertadas = 0, numeroPerguntasTotal = 0, niveisQuizzAberto = [], idQuizzAberto = 0;
+let idSeusQuizzes = JSON.parse(localStorage.getItem("Meus quizzes"));
 pegarquizzes();
 
-function pegarquizzes (){
+function pegarquizzes() {
     const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes");
     promise.then(popularquizzes);
 }
 
-function popularquizzes(resposta){
+function popularquizzes(resposta) {
     const quizzes = resposta.data;
-    const campoQuizz = document.querySelector(".todos-quizzes ul");
-    campoQuizz.innerHTML = "";
-    for(let i=0;i<quizzes.length;i++){
-        campoQuizz.innerHTML +=`
-        <li id=${quizzes[i].id} onclick =" abrirQuizz(this)" >
-            <img src="${quizzes[i].image}">
-            <div class="degrade"></div>
-            <span>${quizzes[i].title}</span>
-        </li>`;
+    const campoTodosQuizzes = document.querySelector(".todos-quizzes ul");
+    campoTodosQuizzes.innerHTML = "";
+    if (idSeusQuizzes === null) {
+        for (let i = 0; i < quizzes.length; i++) {
+            campoTodosQuizzes.innerHTML += `
+            <li id=${quizzes[i].id} onclick =" abrirQuizz(this)" >
+                <img src="${quizzes[i].image}">
+                <div class="degrade"></div>
+                <span>${quizzes[i].title}</span>
+            </li>`;
+        }
+        idSeusQuizzes = [];
     }
+    else {
+        const campoMeusQuizzes = document.querySelector(".meus-quizzes ul");
+        document.querySelector(".nenhum-quizz").classList.add("escondido");
+        document.querySelector(".cabecalho").classList.remove("escondido");
+        campoMeusQuizzes.innerHTML = "";
+        for (let i = 0; i < quizzes.length; i++) {
+            for (let j = 0; j < idSeusQuizzes.length; j++) {
+                if (quizzes[i].id !== idSeusQuizzes[j]) {
+                    campoTodosQuizzes.innerHTML += `
+                    <li id=${quizzes[i].id} onclick =" abrirQuizz(this)" >
+                        <img src="${quizzes[i].image}">
+                        <div class="degrade"></div>
+                        <span>${quizzes[i].title}</span>
+                    </li>`;
+                }
+                else{
+                    popularMeuQuizz(quizzes[i],campoMeusQuizzes);
+                }
+            }
+        }
+        
+    }
+    
+
 }
 
-function abrirQuizz(quizz){
+function popularMeuQuizz(quizz,campoQuizz){
+    campoQuizz.innerHTML += `
+    <li id=${quizz.id} onclick =" abrirQuizz(this)" >
+        <img src="${quizz.image}">
+        <div class="degrade"></div>
+        <span>${quizz.title}</span>
+    </li>`;
+}
+
+function abrirQuizz(quizz) {
     const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${quizz.id}`);
     promise.then(criarPaginaQuizz);
-    idQuizzAberto=quizz.id;
+    idQuizzAberto = quizz.id;
 }
 
-function criarPaginaQuizz(resposta){
+function criarPaginaQuizz(resposta) {
     const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
     paginaQuizz.classList.remove("escondido");
     const background = `
@@ -45,11 +81,11 @@ function criarPaginaQuizz(resposta){
     perguntas.forEach(popularPerguntasQuizzAberto);
 }
 
-function popularPerguntasQuizzAberto(pergunta,indice){
+function popularPerguntasQuizzAberto(pergunta, indice) {
     const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
     const respostas = pergunta.answers;
     respostas.sort(comparador);
-    paginaQuizz.innerHTML +=`
+    paginaQuizz.innerHTML += `
     <div class="pergunta">
         <div class="titulo-pergunta" style="background-color:${pergunta.color}">
             <span>${pergunta.title}</span>
@@ -58,7 +94,7 @@ function popularPerguntasQuizzAberto(pergunta,indice){
         </div>
     </div>`;
     const campoResposta = document.querySelectorAll(".caixa-respostas")[indice];
-    for(let i=0;i<respostas.length;i++){
+    for (let i = 0; i < respostas.length; i++) {
         campoResposta.innerHTML += `
         <div class="resposta" id="${respostas[i].isCorrectAnswer}"onclick="darResposta(this)">
             <img src="${respostas[i].image}">
@@ -67,15 +103,15 @@ function popularPerguntasQuizzAberto(pergunta,indice){
     }
 }
 
-function darResposta(respostaClicada){
-    const totalRespostas =respostaClicada.parentNode.children;
+function darResposta(respostaClicada) {
+    const totalRespostas = respostaClicada.parentNode.children;
     const pergunta = respostaClicada.parentNode.parentNode;
-    if(respostaClicada.parentNode.id !== "respondido"){
-        for(let i=0;i<totalRespostas.length;i++){
-            if(totalRespostas[i].id==="false"){
+    if (respostaClicada.parentNode.id !== "respondido") {
+        for (let i = 0; i < totalRespostas.length; i++) {
+            if (totalRespostas[i].id === "false") {
                 totalRespostas[i].style.color = '#FF4B4B';
             }
-            else{
+            else {
                 totalRespostas[i].style.color = '#009C22';
             }
             totalRespostas[i].style.opacity = '0.3';
@@ -83,23 +119,23 @@ function darResposta(respostaClicada){
         respostaClicada.style.opacity = '1';
         respostaClicada.parentNode.id = 'respondido';
         numeroPerguntasRespondidas++;
-        if(respostaClicada.id === "true"){
+        if (respostaClicada.id === "true") {
             numeroPerguntasAcertadas++;
         }
-        if(numeroPerguntasRespondidas === numeroPerguntasTotal){
+        if (numeroPerguntasRespondidas === numeroPerguntasTotal) {
             darResultado();
         }
-        setTimeout(function(elemento){
-            if(elemento.nextElementSibling !==null){
-                elemento.nextElementSibling.scrollIntoView({behavior: "smooth"});
+        setTimeout(function (elemento) {
+            if (elemento.nextElementSibling !== null) {
+                elemento.nextElementSibling.scrollIntoView({ behavior: "smooth" });
             }
-        },2000,pergunta);
+        }, 2000, pergunta);
     }
 }
 
-function darResultado(){
+function darResultado() {
     const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
-    const acertosPorcentagem = Math.round((numeroPerguntasAcertadas/numeroPerguntasTotal)*100);
+    const acertosPorcentagem = Math.round((numeroPerguntasAcertadas / numeroPerguntasTotal) * 100);
     const resultadoAlcancado = niveisQuizzAberto.find(descobrirResultado);
     paginaQuizz.innerHTML += `
     <div class="resultado">
@@ -111,39 +147,39 @@ function darResultado(){
     </div>
     <button onclick="reiniciarQuizzAberto()">Reiniciar Quizz</button>
     <button onclick="sairQuizzAberto()">Voltar pra home</button>`;
-    setTimeout(()=>document.querySelector(".resultado").scrollIntoView({behavior: "smooth"}),2000);
+    setTimeout(() => document.querySelector(".resultado").scrollIntoView({ behavior: "smooth" }), 2000);
 }
 
-function descobrirResultado(possivelResultado,indice){
-    const acertosPorcentagem = Math.round((numeroPerguntasAcertadas/numeroPerguntasTotal)*100);
+function descobrirResultado(possivelResultado, indice) {
+    const acertosPorcentagem = Math.round((numeroPerguntasAcertadas / numeroPerguntasTotal) * 100);
     let maxValue;
-    if(indice+1 === niveisQuizzAberto.length){
+    if (indice + 1 === niveisQuizzAberto.length) {
         maxValue = 101;
     }
-    else{
-        maxValue = niveisQuizzAberto[indice+1].minValue
+    else {
+        maxValue = niveisQuizzAberto[indice + 1].minValue
     }
-    return (acertosPorcentagem>=possivelResultado.minValue && acertosPorcentagem<maxValue);
+    return (acertosPorcentagem >= possivelResultado.minValue && acertosPorcentagem < maxValue);
 
 }
 
-function reiniciarQuizzAberto(){
+function reiniciarQuizzAberto() {
     const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${idQuizzAberto}`);
     promise.then(criarPaginaQuizz);
     const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
-    paginaQuizz.scrollTo(0,0);
+    paginaQuizz.scrollTo(0, 0);
 }
 
-function sairQuizzAberto(){
+function sairQuizzAberto() {
     const paginaQuizz = document.querySelector(".pagina-quizz-aberto");
-    paginaQuizz.scrollTo(0,0);
+    paginaQuizz.scrollTo(0, 0);
     document.querySelector(".pagina-quizz-aberto").classList.add("escondido");
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
 }
 
 
-function comparador() { 
-	return Math.random() - 0.5; 
+function comparador() {
+    return Math.random() - 0.5;
 }
 
 
@@ -158,17 +194,21 @@ let qntPerguntas = 0;
 let niveis = 0;
 const dados = {};
 let meuQuizz = 0;
-let meusIDs = [];
 
-function prosseguirParaPerguntas(){
+function abrirCriadorDeQuizzes(){
+    document.querySelector(".pagina-inicial").classList.add("escondido");
+    document.querySelector(".informacoes-basicas").classList.remove("escondido");
+}
+
+function prosseguirParaPerguntas() {
     tituloQuizz = document.querySelector(".titulo").value;
     urlTitulo = document.querySelector(".url").value
     qntPerguntas = parseInt(document.querySelector(".quantidadePerguntas").value);
     niveis = parseInt(document.querySelector(".quantidadeNiveis").value);
 
-    if (!validateURL(urlTitulo) || tituloQuizz.length<20 || tituloQuizz.length>65 || qntPerguntas<3 || niveis<2){
+    if (!validateURL(urlTitulo) || tituloQuizz.length < 20 || tituloQuizz.length > 65 || qntPerguntas < 3 || niveis < 2) {
         alert("Preencha os dados corretamente");
-    } else{
+    } else {
         irParaPerguntas();
     }
 
@@ -176,21 +216,21 @@ function prosseguirParaPerguntas(){
     dados.image = urlTitulo;
 }
 
-function irParaPerguntas(){
+function irParaPerguntas() {
     const pagInfos = document.querySelector(".informacoes-basicas");
     pagInfos.classList.add("escondido");
     const pagCriacao = document.querySelector(".criar-perguntas");
     pagCriacao.classList.remove("escondido");
-    
+
     popularPerguntas();
 }
 
-function popularPerguntas(){
+function popularPerguntas() {
     const numPerguntas = document.querySelector(".caixaPergunta");
-    numPerguntas.innerHTML="";
+    numPerguntas.innerHTML = "";
 
-    for (i=1; i<=qntPerguntas; i++){
-        numPerguntas.innerHTML+=`
+    for (i = 1; i <= qntPerguntas; i++) {
+        numPerguntas.innerHTML += `
             <div class="perguntas pergunta${i}">
                 <div class="numero-pergunta">
                     <h1>Pergunta ${i}</h1>
@@ -221,11 +261,11 @@ function popularPerguntas(){
     }
 }
 
-function abrirMenuDados(perguntaAberta){ // pega o elemento que voce clicou, que no caso é o ion-icon
+function abrirMenuDados(perguntaAberta) { // pega o elemento que voce clicou, que no caso é o ion-icon
     const dadosPergunta = perguntaAberta.parentNode.nextElementSibling;// do ion-icon vai até a parte que fica com os dados daquela pergunta
     const dadosTodasPerguntas = document.querySelectorAll(".dados-pergunta");//pega todos os dados de todas as perguntas
     const icones = document.querySelectorAll(".numero-pergunta ion-icon");//pega todos os icones das perguntas
-    for(let i=0;i<dadosTodasPerguntas.length;i++){
+    for (let i = 0; i < dadosTodasPerguntas.length; i++) {
         dadosTodasPerguntas[i].classList.add("dropdown");//coloca o dropdown em todas as perguntas
         icones[i].classList.remove("escondido");//remove o escondido das perguntas que não estão maximizadas
     }
@@ -234,56 +274,56 @@ function abrirMenuDados(perguntaAberta){ // pega o elemento que voce clicou, que
     perguntaAberta.classList.add("escondido");// esconde o ion-icon que voce clicou
 }
 
-function prosseguirParaNiveis(){
+function prosseguirParaNiveis() {
     const questions = [];
 
-    for(let i=1; i<=qntPerguntas; i++){
-        const pergunta = document.querySelector(".pergunta"+i);
+    for (let i = 1; i <= qntPerguntas; i++) {
+        const pergunta = document.querySelector(".pergunta" + i);
         const texto = pergunta.querySelector(".dados-pergunta .texto").value;
         const cor = pergunta.querySelector(".dados-pergunta .cor").value;
         const respostaCorreta = pergunta.querySelector(".dados-pergunta .correta").value;
         const urlRespostaCorreta = pergunta.querySelector(".dados-pergunta .urlRespostaCorreta").value;
         const answers = [];
 
-        if (texto.length<20){
+        if (texto.length < 20) {
             alert("Preencha os dados corretamente");
             return;
         }
 
-        if (!isHexColor(cor)){
+        if (!isHexColor(cor)) {
             alert("Preencha os dados corretamente");
             return;
         }
 
-        if (respostaCorreta===""){
+        if (respostaCorreta === "") {
             alert("Preencha os dados corretamente");
             return;
         }
 
-        if (!validateURL(urlRespostaCorreta)){
+        if (!validateURL(urlRespostaCorreta)) {
             alert("Preencha os dados corretamente");
             return;
         }
-        
-        if (pergunta.querySelector(".incorreta1").value==="" && pergunta.querySelector(".incorreta2").value==="" && pergunta.querySelector(".incorreta3").value===""){
+
+        if (pergunta.querySelector(".incorreta1").value === "" && pergunta.querySelector(".incorreta2").value === "" && pergunta.querySelector(".incorreta3").value === "") {
             alert("Preencha os dados corretamente");
             return;
         }
 
         answers.push({
-                text: respostaCorreta, 
-                image: urlRespostaCorreta,
-                isCorrectAnswer: true
+            text: respostaCorreta,
+            image: urlRespostaCorreta,
+            isCorrectAnswer: true
         })
-        
-        for (let z=1; z<=3; z++){
-            const respostaIncorreta = pergunta.querySelector(".incorreta"+i).value;
-            const urlIncorreta = pergunta.querySelector(".urlIncorreta"+i).value;
 
-            if (respostaIncorreta !== ""){
-                if (!validateURL(urlIncorreta)){
+        for (let z = 1; z <= 3; z++) {
+            const respostaIncorreta = pergunta.querySelector(".incorreta" + z).value;
+            const urlIncorreta = pergunta.querySelector(".urlIncorreta" + z).value;
+
+            if (respostaIncorreta !== "") {
+                if (!validateURL(urlIncorreta)) {
                     alert("Preencha os dados corretamente");
-                    return;        
+                    return;
                 }
 
                 answers.push({
@@ -306,7 +346,7 @@ function prosseguirParaNiveis(){
     irParaNiveis();
 }
 
-function irParaNiveis(){
+function irParaNiveis() {
     const pagCriacao = document.querySelector(".criar-perguntas");
     pagCriacao.classList.add("escondido");
     const pagNiveis = document.querySelector(".definir-niveis");
@@ -315,12 +355,12 @@ function irParaNiveis(){
     popularNiveis();
 }
 
-function popularNiveis(){
+function popularNiveis() {
     const numNiveis = document.querySelector(".caixa-niveis");
     numNiveis.innerHTML = "";
 
-    for (i=1; i<=niveis; i++){
-        numNiveis.innerHTML+= `
+    for (i = 1; i <= niveis; i++) {
+        numNiveis.innerHTML += `
             <div class="niveis nivel${i}">
                 <div class="numero-pergunta">
                     <h1>Nível ${i}</h1>
@@ -337,12 +377,12 @@ function popularNiveis(){
     }
 }
 
-function abrirMenuNiveis(nivelAberto){
+function abrirMenuNiveis(nivelAberto) {
     const dadosNivel = nivelAberto.parentNode.nextElementSibling;
     const dadosTodosNiveis = document.querySelectorAll(".dados-nivel");
     const icones = document.querySelectorAll(".niveis .numero-pergunta ion-icon");
-    
-    for(let i=0;i<dadosTodosNiveis.length;i++){
+
+    for (let i = 0; i < dadosTodosNiveis.length; i++) {
         dadosTodosNiveis[i].classList.add("dropdown");
         icones[i].classList.remove("escondido");
     }
@@ -352,11 +392,11 @@ function abrirMenuNiveis(nivelAberto){
     nivelAberto.classList.add("escondido");
 }
 
-function finalizarQuizz(){
+function finalizarQuizz() {
     const levels = [];
     const porcentagens = [];
-    for (i=1; i<=niveis; i++){
-        const nivel = document.querySelector(".nivel"+i);
+    for (i = 1; i <= niveis; i++) {
+        const nivel = document.querySelector(".nivel" + i);
         const titulo = nivel.querySelector(".titulo").value;
         const porcentagem = parseInt(nivel.querySelector(".porcentagem").value);
         const urlImagem = nivel.querySelector(".urlImagem").value;
@@ -364,36 +404,36 @@ function finalizarQuizz(){
 
         porcentagens.push(porcentagem);
 
-        if (titulo.length<10){
+        if (titulo.length < 10) {
             alert("Preencha os dados corretamente");
             return;
         }
 
-        if (porcentagem<0 || porcentagem>100 || porcentagem===""){
+        if (porcentagem < 0 || porcentagem > 100 || porcentagem === "") {
             alert("Preencha os dados corretamente");
             return;
         }
 
-        if (!validateURL(urlImagem)){
+        if (!validateURL(urlImagem)) {
             alert("Preencha os dados corretamente");
             return;
         }
 
-        if (descricao<30){
+        if (descricao < 30) {
             alert("Preencha os dados corretamente");
             return;
         }
-    
+
         levels.push({
             title: titulo,
             image: urlImagem,
             text: descricao,
             minValue: porcentagem
         })
-        
+
     }
     console.log(porcentagens);
-    if (porcentagens.indexOf(0)===-1){
+    if (porcentagens.indexOf(0) === -1) {
         alert("Preencha os dados corretamente");
         return;
     }
@@ -401,27 +441,23 @@ function finalizarQuizz(){
     dados.levels = levels;
     console.log(dados);
     const promessa = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes", dados);
-    promessa.then(executado);
+    promessa.then(salvandoMeuQuizz);
     promessa.catch(erro);
 
     irParaFinalizacao();
 }
 
-function executado(resposta){
-    meuQuizz = resposta.data.id;
-    localStorage(meuQuizz);
+function salvandoMeuQuizz(resposta) {
+    meuQuizz = resposta.data;
+    idSeusQuizzes.push(meuQuizz.id);
+    localStorage.setItem("Meus quizzes", JSON.stringify(idSeusQuizzes));
 }
 
-function localStorage(id){
-    meusIDs.push(id);
-    localStorage.setItem("Meus quizzes", JSON.stringify(meusIDs));
-}
-
-function erro(){
+function erro() {
     alert("Ocorreu um erro no envio do seu quizz");
 }
 
-function irParaFinalizacao(){
+function irParaFinalizacao() {
     const pagNiveis = document.querySelector(".definir-niveis");
     pagNiveis.classList.add("escondido");
     const pagFinalizacao = document.querySelector(".finalizar-criacao");
@@ -430,16 +466,17 @@ function irParaFinalizacao(){
     popularFinalizacao();
 }
 
-function popularFinalizacao(){
+function popularFinalizacao() {
     const finalizar = document.querySelector(".finalizar-criacao div");
     finalizar.innerHTML = `
+    <div>
         <img src="${urlTitulo}">
         <div class="degrade"></div>
         <span>${tituloQuizz}</span>
-    `;
+    </div>`;
 }
 
-function acessarQuizz(){
+function acessarQuizz() {
     pegarquizzes();
     const pagFinalizacao = document.querySelector(".finalizar-criacao");
     pagFinalizacao.classList.add("escondido");
@@ -448,7 +485,7 @@ function acessarQuizz(){
     abrirQuizz(meuQuizz);
 }
 
-function voltarHome(){
+function voltarHome() {
     pegarquizzes();
     const pagFinalizacao = document.querySelector(".finalizar-criacao");
     pagFinalizacao.classList.add("escondido");
@@ -460,18 +497,18 @@ function voltarHome(){
     todosQuizzes.classList.remove("escondido")
 }
 
-function validateURL(str){
-    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+function validateURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
     return !!pattern.test(str);
 }
 
-function isHexColor (str) {   
-    if (!/^#[0-9A-F]{6}$/i.test(str)){
+function isHexColor(str) {
+    if (!/^#[0-9A-F]{6}$/i.test(str)) {
         return false;
     }
     return true;
