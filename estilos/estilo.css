@@ -84,6 +84,24 @@ body{
     color: #EC362D;
     font-size: 21px;
 }
+.edit-delete{
+    width: 43px;
+    height: 87px;
+    position: absolute;
+    top: 9px;
+    right: 0;
+    background-color: #EC362D;
+    border-radius: 10px 0px 0px 11px;
+    text-align: center;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.edit-delete ion-icon{
+    margin: 8px 0;
+}
 .todos-quizzes{
     width: 1051px;
     margin: 77px auto;
