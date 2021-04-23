@@ -21,12 +21,11 @@ body{
 }
 .meus-quizzes{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     width: 1051px;
     margin: 100px auto 0 auto;
 }
 .cabecalho{
-    width: 100%;
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -393,6 +392,9 @@ li img{
 @media(max-width:1100px){
   .meus-quizzes{
       width: calc(100% - 34px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
   }
   .todos-quizzes{
       width:calc(100% - 34px);
@@ -457,8 +459,12 @@ li img{
 }
 
 @media(max-width:750px){
-    .todos-quizzes span{
+    .todos-quizzes span,.meus-quizzes .cabecalho{
         width: 340px;
+    }
+    .cabecalho{
+        display: flex;
+        justify-content: space-between;
     }
     li{
         margin-left: 0px;
@@ -473,8 +479,9 @@ li img{
     .todos-quizzes span{
         width: 100%;
     }
-    li{
+    li,.meus-quizzes .cabecalho{
         width: calc(100% - 34px);
+        overflow: hidden;
     }  
     .todos-quizzes span{
         width: calc(100% - 34px);
