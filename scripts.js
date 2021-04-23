@@ -154,17 +154,19 @@ function comparador() {
 
 let tituloQuizz = "";
 let urlTitulo = "";
-let qnt_perguntas = 0;
+let qntPerguntas = 0;
 let niveis = 0;
 const dados = {};
+let meuQuizz = 0;
+let meusIDs = [];
 
 function prosseguirParaPerguntas(){
     tituloQuizz = document.querySelector(".titulo").value;
     urlTitulo = document.querySelector(".url").value
-    qnt_perguntas = parseInt(document.querySelector(".quantidadePerguntas").value);
+    qntPerguntas = parseInt(document.querySelector(".quantidadePerguntas").value);
     niveis = parseInt(document.querySelector(".quantidadeNiveis").value);
 
-    if (!validateURL(urlTitulo) || tituloQuizz.length<20 || tituloQuizz.length>65 || qnt_perguntas<3 || niveis<2){
+    if (!validateURL(urlTitulo) || tituloQuizz.length<20 || tituloQuizz.length>65 || qntPerguntas<3 || niveis<2){
         alert("Preencha os dados corretamente");
     } else{
         irParaPerguntas();
@@ -187,7 +189,7 @@ function popularPerguntas(){
     const numPerguntas = document.querySelector(".caixaPergunta");
     numPerguntas.innerHTML="";
 
-    for (i=1; i<=qnt_perguntas; i++){
+    for (i=1; i<=qntPerguntas; i++){
         numPerguntas.innerHTML+=`
             <div class="perguntas pergunta${i}">
                 <div class="numero-pergunta">
@@ -235,7 +237,7 @@ function abrirMenuDados(perguntaAberta){ // pega o elemento que voce clicou, que
 function prosseguirParaNiveis(){
     const questions = [];
 
-    for(let i=1; i<=qnt_perguntas; i++){
+    for(let i=1; i<=qntPerguntas; i++){
         const pergunta = document.querySelector(".pergunta"+i);
         const texto = pergunta.querySelector(".dados-pergunta .texto").value;
         const cor = pergunta.querySelector(".dados-pergunta .cor").value;
@@ -405,8 +407,14 @@ function finalizarQuizz(){
     irParaFinalizacao();
 }
 
-function executado(){
+function executado(resposta){
+    meuQuizz = resposta.data.id;
+    localStorage(meuQuizz);
+}
 
+function localStorage(id){
+    meusIDs.push(id);
+    localStorage.setItem("Meus quizzes", JSON.stringify(meusIDs));
 }
 
 function erro(){
@@ -432,26 +440,25 @@ function popularFinalizacao(){
 }
 
 function acessarQuizz(){
-    const pagFinalizacao = document.querySelector(".finalizar-criacao");
-    pagFinalizacao.classList.add("escondido");
-
     pegarquizzes();
-}
-
-function voltarHome(){
-    pegarquizzes();
-
     const pagFinalizacao = document.querySelector(".finalizar-criacao");
     pagFinalizacao.classList.add("escondido");
     const meusQuizzes = document.querySelector(".meus-quizzes");
     meusQuizzes.classList.remove("escondido");
-    const cabecalho document.querySelector(".cabecalho");
+    abrirQuizz(meuQuizz);
+}
+
+function voltarHome(){
+    pegarquizzes();
+    const pagFinalizacao = document.querySelector(".finalizar-criacao");
+    pagFinalizacao.classList.add("escondido");
+    const meusQuizzes = document.querySelector(".meus-quizzes");
+    meusQuizzes.classList.remove("escondido");
+    const cabecalho = document.querySelector(".cabecalho");
     cabecalho.classList.remove("escondido");
     const todosQuizzes = document.querySelector(".todos-quizzes");
     todosQuizzes.classList.remove("escondido")
 }
-
-
 
 function validateURL(str){
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol

@@ -19,7 +19,6 @@ body{
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     z-index: 11;
 }
-
 .meus-quizzes{
     display: flex;
     flex-wrap: wrap;
@@ -230,8 +229,6 @@ li img{
     margin-bottom: 85px;
      outline: none;
 }
-
-
 .descricao{
     width: 328px;
     font-size: 19px;
@@ -239,7 +236,6 @@ li img{
     line-height: 25px;
     color: #484848;
 }
-
 .informacoes-basicas,
 .criar-perguntas,
 .definir-niveis,
@@ -390,12 +386,10 @@ li img{
 .finalizar-criacao{
     z-index: 7;
 }
-
-
-
 .escondido{
     display: none;
 }
+
 @media(max-width:1100px){
   .meus-quizzes{
       width: calc(100% - 34px);
@@ -461,17 +455,18 @@ li img{
     line-height: 21px;
   }
 }
+
 @media(max-width:750px){
-.todos-quizzes span{
-    width: 340px;
-}
-li{
-    margin-left: 0px;
-}
-li:nth-child(3n-1){
-    margin: 0;
-    margin-top: 12px;
-  } 
+    .todos-quizzes span{
+        width: 340px;
+    }
+    li{
+        margin-left: 0px;
+    }
+    li:nth-child(3n-1){
+        margin: 0;
+        margin-top: 12px;
+    } 
 }
 
 @media(max-width:400px){
@@ -480,7 +475,6 @@ li:nth-child(3n-1){
     }
     li{
         width: calc(100% - 34px);
-        
     }  
     .todos-quizzes span{
         width: calc(100% - 34px);
