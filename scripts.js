@@ -425,22 +425,30 @@ function irParaFinalizacao(){
 function popularFinalizacao(){
     const finalizar = document.querySelector(".finalizar-criacao div");
     finalizar.innerHTML = `
-        <img src="${quizzes[i].image}">
+        <img src="${urlTitulo}">
         <div class="degrade"></div>
-        <span>${quizzes[i].title}</span>
+        <span>${tituloQuizz}</span>
     `;
 }
 
 function acessarQuizz(){
-    
+    const pagFinalizacao = document.querySelector(".finalizar-criacao");
+    pagFinalizacao.classList.add("escondido");
+
+    pegarquizzes();
 }
 
 function voltarHome(){
+    pegarquizzes();
+
     const pagFinalizacao = document.querySelector(".finalizar-criacao");
     pagFinalizacao.classList.add("escondido");
-    const pagInicial = document.querySelector(".pagina-inicial");
-    pagInicial.classList.remove("escondido");
-    pegarquizzes();
+    const meusQuizzes = document.querySelector(".meus-quizzes");
+    meusQuizzes.classList.remove("escondido");
+    const cabecalho document.querySelector(".cabecalho");
+    cabecalho.classList.remove("escondido");
+    const todosQuizzes = document.querySelector(".todos-quizzes");
+    todosQuizzes.classList.remove("escondido")
 }
 
 
