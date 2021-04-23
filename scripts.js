@@ -588,7 +588,8 @@ function deletarQuizz(QuizzIon){
                 return false;
             }
             return true;
-        })
+        });
+        localStorage.setItem("Meus quizzes", JSON.stringify(seusQuizzes));
         pegarquizzes();
     }
 }
