@@ -1,7 +1,7 @@
 let numeroPerguntasRespondidas = 0, numeroPerguntasAcertadas = 0, numeroPerguntasTotal = 0, niveisQuizzAberto = [], idQuizzAberto = 0,contador=0;;
 let seusQuizzes = JSON.parse(localStorage.getItem("Meus quizzes"));
 let tituloQuizz = "", urlTitulo = "", qntPerguntas = 0, niveis = 0, meuQuizz = 0;
-const dados = {};
+let dados = {};
 const telaCarregamento = document.querySelector(".tela-carregamento");
 pegarquizzes();
 
@@ -306,17 +306,17 @@ function popularPerguntas() {
     }
 }
 
-function abrirMenuDados(perguntaAberta) { // pega o elemento que voce clicou, que no caso é o ion-icon
-    const dadosPergunta = perguntaAberta.parentNode.nextElementSibling;// do ion-icon vai até a parte que fica com os dados daquela pergunta
-    const dadosTodasPerguntas = document.querySelectorAll(".dados-pergunta");//pega todos os dados de todas as perguntas
-    const icones = document.querySelectorAll(".numero-pergunta ion-icon");//pega todos os icones das perguntas
+function abrirMenuDados(perguntaAberta) { 
+    const dadosPergunta = perguntaAberta.parentNode.nextElementSibling;
+    const dadosTodasPerguntas = document.querySelectorAll(".dados-pergunta");
+    const icones = document.querySelectorAll(".numero-pergunta ion-icon");
     for (let i = 0; i < dadosTodasPerguntas.length; i++) {
-        dadosTodasPerguntas[i].classList.add("dropdown");//coloca o dropdown em todas as perguntas
-        icones[i].classList.remove("escondido");//remove o escondido das perguntas que não estão maximizadas
+        dadosTodasPerguntas[i].classList.add("dropdown");
+        icones[i].classList.remove("escondido");
     }
-    dadosPergunta.classList.remove("dropdown");// remove o dropdown só dos dados do ion-icon que voce clicou
-    dadosPergunta.parentNode.scrollIntoView();//sobe para o inicio daquela pergunta(desnecessario,mas eu estava querendo testar essa função)
-    perguntaAberta.classList.add("escondido");// esconde o ion-icon que voce clicou
+    dadosPergunta.classList.remove("dropdown");
+    dadosPergunta.parentNode.scrollIntoView();
+    perguntaAberta.classList.add("escondido");
 }
 
 function prosseguirParaNiveis() {
@@ -567,9 +567,13 @@ function isHexColor(str) {
     return true;
 }
 
-
+////////////////sessão do bonus de deletar////////////////
 
 function deletarQuizz(QuizzIon){
+    const confirmar = confirm('Tem certeza que deseja deletar esse quizz');
+    if(!confirmar){
+        return;
+    }
     const quizz = QuizzIon.parentNode.parentNode;
     const key = seusQuizzes.key[seusQuizzes.id.indexOf(parseInt(quizz.id))];
     const promessa = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${parseInt(quizz.id)}`,{headers: {'Secret-Key': key}});
