@@ -156,7 +156,7 @@ let tituloQuizz = "";
 let urlTitulo = "";
 let qnt_perguntas = 0;
 let niveis = 0;
-const dados = [];
+const dados = {};
 
 function prosseguirParaPerguntas(){
     tituloQuizz = document.querySelector(".titulo").value;
@@ -338,7 +338,7 @@ function popularNiveis(){
 function abrirMenuNiveis(nivelAberto){
     const dadosNivel = nivelAberto.parentNode.nextElementSibling;
     const dadosTodosNiveis = document.querySelectorAll(".dados-nivel");
-    const icones = document.querySelectorAll(".numero-pergunta ion-icon");
+    const icones = document.querySelectorAll(".niveis .numero-pergunta ion-icon");
     
     for(let i=0;i<dadosTodosNiveis.length;i++){
         dadosTodosNiveis[i].classList.add("dropdown");
@@ -352,34 +352,33 @@ function abrirMenuNiveis(nivelAberto){
 
 function finalizarQuizz(){
     const levels = [];
-
+    const porcentagens = [];
     for (i=1; i<=niveis; i++){
         const nivel = document.querySelector(".nivel"+i);
         const titulo = nivel.querySelector(".titulo").value;
-        const porcentagem = nivel.querySelector(".porcentagem").value;
-        const porcentagens = [];
-        const urlImagem = nivel.querySelector(".imagem").value;
+        const porcentagem = parseInt(nivel.querySelector(".porcentagem").value);
+        const urlImagem = nivel.querySelector(".urlImagem").value;
         const descricao = nivel.querySelector(".descricao").value;
 
         porcentagens.push(porcentagem);
 
         if (titulo.length<10){
-            alert("Preencha os dados corretamente");
+            alert("Preencha os dados corretamente a");
             return;
         }
 
         if (porcentagem<0 || porcentagem>100 || porcentagem===""){
-            alert("Preencha os dados corretamente");
+            alert("Preencha os dados corretamente b");
             return;
         }
 
         if (!validateURL(urlImagem)){
-            alert("Preencha os dados corretamente");
+            alert("Preencha os dados corretamente c");
             return;
         }
 
         if (descricao<30){
-            alert("Preencha os dados corretamente");
+            alert("Preencha os dados corretamente d");
             return;
         }
     
@@ -389,20 +388,21 @@ function finalizarQuizz(){
             text: descricao,
             minValue: porcentagem
         })
+        
     }
-    
-    if (porcentagens.indexof(0)===-1){
-        alert("Preencha os dados corretamente");
+    console.log(porcentagens);
+    if (porcentagens.indexOf(0)===-1){
+        alert("Preencha os dados corretamente e");
         return;
     }
 
     dados.levels = levels;
+    console.log(dados);
+    //const promessa = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes", dados);
+    //promessa.then(executado);
+    //promessa.catch(erro);
 
-    const promessa = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes", dados);
-    promessa.then(executado);
-    promessa.catch(erro);
-
-    irParaFinalizacao();
+    //irParaFinalizacao();
 }
 
 function executado(){
