@@ -230,7 +230,7 @@ function irParaPerguntas() {
 }
 
 function popularPerguntas() {
-    const numPerguntas = document.querySelector(".caixaPergunta");
+    const numPerguntas = document.querySelector(".caixa-pergunta");
     numPerguntas.innerHTML = "";
 
     for (i = 1; i <= qntPerguntas; i++) {
@@ -498,7 +498,8 @@ function voltarHome() {
     const cabecalho = document.querySelector(".cabecalho");
     cabecalho.classList.remove("escondido");
     const todosQuizzes = document.querySelector(".todos-quizzes");
-    todosQuizzes.classList.remove("escondido")
+    todosQuizzes.classList.remove("escondido");
+    document.querySelector(".pagina-inicial").classList.remove("escondido");
 }
 
 function validateURL(str) {
