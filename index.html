@@ -15,7 +15,7 @@
     <div class="topo">
         <h1>BuzzQuizz</h1>
     </div>
-    <div class="pagina-inicial">
+    <div class="pagina-inicial escondido">
         <div class="meus-quizzes escondido">
             <div class="cabecalho escondido">
                 <span>Seus Quizzes</span>
@@ -50,8 +50,7 @@
 
     <div class="criar-perguntas escondido">
         <span>Crie suas perguntas</span>
-        <div class="caixaPergunta">
-            
+        <div class="caixa-pergunta">
         </div>
         <button onclick="prosseguirParaNiveis()">Prosseguir pra criar níveis</button>
     </div>
@@ -59,18 +58,18 @@
     <div class="definir-niveis escondido">
         <span>Agora decida os níveis</span>
         <div class="caixa-niveis">
-            
         </div>
         <button onclick="finalizarQuizz()">Finalizar Quizz</button>
     </div>
 
     <div class="finalizar-criacao escondido">
         <span>Seu quizz está pronto!</span>
-        <div>
-
+        <div class="caixa-finalizacao">
         </div>
-        <button class="botao-acesso" onclick="acessarQuizz()">Acessar Quizz</button>
-        <button class="botao-home" onclick="voltarHome()">Voltar para home</button>
+        <div class="botoes">
+            <button class="botao-acesso" onclick="acessarQuizz()">Acessar Quizz</button>
+            <button class="botao-home" onclick="voltarHome()">Voltar para home</button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

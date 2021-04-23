@@ -434,7 +434,7 @@ function popularFinalizacao(){
     const finalizar = document.querySelector(".finalizar-criacao div");
     finalizar.innerHTML = `
         <img src="${urlTitulo}">
-        <div class="degrade"></div>
+        <div class="degrade-finalizacao"></div>
         <span>${tituloQuizz}</span>
     `;
 }
