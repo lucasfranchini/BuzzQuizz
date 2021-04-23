@@ -8,7 +8,8 @@ function pegarquizzes() {
 }
 
 function popularquizzes(resposta) {
-    const quizzes = resposta.data;
+    let quizzes = resposta.data;
+    console.log(quizzes);
     const campoTodosQuizzes = document.querySelector(".todos-quizzes ul");
     campoTodosQuizzes.innerHTML = "";
     if (idSeusQuizzes === null) {
@@ -27,29 +28,32 @@ function popularquizzes(resposta) {
         document.querySelector(".nenhum-quizz").classList.add("escondido");
         document.querySelector(".cabecalho").classList.remove("escondido");
         campoMeusQuizzes.innerHTML = "";
+        quizzes = quizzes.filter(verificandoMeusQuizzes)
         for (let i = 0; i < quizzes.length; i++) {
-            for (let j = 0; j < idSeusQuizzes.length; j++) {
-                if (quizzes[i].id !== idSeusQuizzes[j]) {
-                    campoTodosQuizzes.innerHTML += `
-                    <li id=${quizzes[i].id} onclick =" abrirQuizz(this)" >
-                        <img src="${quizzes[i].image}">
-                        <div class="degrade"></div>
-                        <span>${quizzes[i].title}</span>
-                    </li>`;
-                }
-                else{
-                    popularMeuQuizz(quizzes[i],campoMeusQuizzes);
-                }
-            }
+            campoTodosQuizzes.innerHTML += `
+            <li id=${quizzes[i].id} onclick =" abrirQuizz(this)" >
+                <img src="${quizzes[i].image}">
+                <div class="degrade"></div>
+                <span>${quizzes[i].title}</span>
+            </li>`;
         }
-        
     }
-    
-
 }
 
-function popularMeuQuizz(quizz,campoQuizz){
-    campoQuizz.innerHTML += `
+function verificandoMeusQuizzes(quizz){
+    let verificador =true;
+    for(let i = 0; i<idSeusQuizzes.length;i++){
+        if(quizz.id === idSeusQuizzes[i]){
+            verificador = false;
+            popularMeuQuizz(quizz);
+        }
+    }
+    return verificador;
+}
+
+function popularMeuQuizz(quizz){
+    const campoMeusQuizzes = document.querySelector(".meus-quizzes ul");
+    campoMeusQuizzes.innerHTML += `
     <li id=${quizz.id} onclick =" abrirQuizz(this)" >
         <img src="${quizz.image}">
         <div class="degrade"></div>
