@@ -1,5 +1,7 @@
 let numeroPerguntasRespondidas = 0, numeroPerguntasAcertadas = 0, numeroPerguntasTotal = 0, niveisQuizzAberto = [], idQuizzAberto = 0,contador=0;;
 let seusQuizzes = JSON.parse(localStorage.getItem("Meus quizzes"));
+let tituloQuizz = "", urlTitulo = "", qntPerguntas = 0, niveis = 0, meuQuizz = 0;
+const dados = {};
 const telaCarregamento = document.querySelector(".tela-carregamento");
 pegarquizzes();
 
@@ -203,19 +205,6 @@ function comparador() {
     return Math.random() - 0.5;
 }
 
-
-
-
-
-
-
-let tituloQuizz = "";
-let urlTitulo = "";
-let qntPerguntas = 0;
-let niveis = 0;
-let dados = {};
-let meuQuizz = 0;
-
 function abrirCriadorDeQuizzes(){
     document.querySelector(".pagina-inicial").classList.add("escondido");
     document.querySelector(".informacoes-basicas").classList.remove("escondido");
@@ -229,6 +218,31 @@ function prosseguirParaPerguntas() {
 
     if (!validateURL(urlTitulo) || tituloQuizz.length < 20 || tituloQuizz.length > 65 || qntPerguntas < 3 || niveis < 2) {
         alert("Preencha os dados corretamente");
+        if (!validateURL(urlTitulo)){
+            const corURL = document.querySelector(".novo-quiz .url");
+            corURL.classList.add("erro");
+            const textoURL = document.querySelector(".novo-quiz .alertaURL");
+            textoURL.classList.remove("escondido");
+        }
+        if (tituloQuizz.length < 20 || tituloQuizz.length > 65){
+            const corTitulo = document.querySelector(".novo-quiz .titulo");
+            corTitulo.classList.add("erro");
+            const textoTitulo = document.querySelector(".novo-quiz .alertaTitulo");
+            textoTitulo.classList.remove("escondido");
+        }
+        if (qntPerguntas < 3){
+            const corPerguntas = document.querySelector(".novo-quiz .quantidadePerguntas");
+            corPerguntas.classList.add("erro");
+            const textoPerguntas = document.querySelector(".novo-quiz .alertaPerguntas");
+            textoPerguntas.classList.remove("escondido");
+        }
+        if (niveis < 2){
+            const corNiveis = document.querySelector(".novo-quiz .quantidadeNiveis");
+            corNiveis.classList.add("erro");
+            const textoNiveis = document.querySelector(".novo-quiz .alertaNiveis");
+            textoNiveis.classList.remove("escondido");
+
+        }
     } else {
         irParaPerguntas();
     }
@@ -259,22 +273,32 @@ function popularPerguntas() {
                 </div>
                 <div class="dados-pergunta dropdown">
                     <input type="text" class="texto" placeholder="Texto da pergunta" onfocus="this.value='';">
-                    <input type="text" class="cor" placeholder="Cor de fundo da pergunta" onfocus="this.value='';">    
+                    <p class="escondido">O título deve conter no mínimo 20 caracteres.</p>
+                    <input type="text" class="cor" placeholder="Cor de fundo da pergunta" onfocus="this.value='';">
+                    <p class="escondido">A cor deve ter o formato hexadecimal, com letras de A a F e números (ex. #e3f1a5).</p>    
                     <h2>Resposta correta</h2>
                     <input type="text" class="correta" placeholder="Resposta correta" onfocus="this.value='';" required>
-                    <input type="text" class="urlRespostaCorreta" placeholder="URL da imagem" onfocus="this.value='';" required> 
+                    <p class="escondido">O campo de respostas não pode estar vazio.</p>
+                    <input type="text" class="urlRespostaCorreta" placeholder="URL da imagem" onfocus="this.value='';" required>
+                    <p class="escondido">O valor informado não é uma URL válida.</p>
                     <h2>Respostas incorretas</h2>
                     <div class="resposta-incorreta">
                         <input type="text" class="incorreta1" placeholder="Resposta incorreta 1" onfocus="this.value='';">
-                        <input type="text" class="urlIncorreta1" placeholder="URL da imagem 1" onfocus="this.value='';"> 
+                        <p class="escondido">O campo de respostas não pode estar vazio.</p>
+                        <input type="text" class="urlIncorreta1" placeholder="URL da imagem 1" onfocus="this.value='';">
+                        <p class="escondido">O valor informado não é uma URL válida.</p>
                     </div>
                     <div class="resposta-incorreta">
                         <input type="text" class="incorreta2" placeholder="Resposta incorreta 2" onfocus="this.value='';">
-                        <input type="text" class="urlIncorreta2" placeholder="URL da imagem 2" onfocus="this.value='';"> 
+                        <p class="escondido">O campo de respostas não pode estar vazio.</p>
+                        <input type="text" class="urlIncorreta2" placeholder="URL da imagem 2" onfocus="this.value='';">
+                        <p class="escondido">O valor informado não é uma URL válida.</p>
                     </div>
                     <div class="resposta-incorreta">
                         <input type="text" class="incorreta3" placeholder="Resposta incorreta 3" onfocus="this.value='';">
-                        <input type="text" class="urlIncorreta3" placeholder="URL da imagem 3" onfocus="this.value='';"> 
+                        <p class="escondido">O campo de respostas não pode estar vazio.</p>
+                        <input type="text" class="urlIncorreta3" placeholder="URL da imagem 3" onfocus="this.value='';">
+                        <p class="escondido">O valor informado não é uma URL válida.</p>
                     </div>
                 </div>
             </div>
@@ -362,7 +386,6 @@ function prosseguirParaNiveis() {
     }
 
     dados.questions = questions;
-    console.log(dados)
 
     irParaNiveis();
 }
@@ -389,9 +412,13 @@ function popularNiveis() {
                 </div>
                 <div class="dados-nivel dropdown">
                     <input type="text" class="titulo" placeholder="Título do nível" onfocus="this.value='';">
+                    <p class="escondido">O título deve conter no mínimo 10 caracteres.</p>
                     <input type="number" class="porcentagem" placeholder="% de acerto mínima" max=100 min=0 onfocus="this.value='';">
+                    <p class="escondido">A % deve ser um número entre 0 e 100.</p>
                     <input type="url" class="urlImagem" placeholder="URL da imagem do nível" onfocus="this.value='';">
+                    <p class="escondido">O valor informado não é uma URL válida.</p>
                     <input type="text" class="descricao" placeholder="Descrição do nível" onfocus="this.value='';">
+                    <p class="escondido">A descrição deve conter no mínimo 30 caracteres.</p>
                 </div>
             </div>   
         `;
@@ -453,14 +480,15 @@ function finalizarQuizz() {
         })
 
     }
-    console.log(porcentagens);
     if (porcentagens.indexOf(0) === -1) {
         alert("Preencha os dados corretamente");
         return;
     }
 
     dados.levels = levels;
+
     telaCarregamento.classList.remove("escondido");
+
     const promessa = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes", dados);
     promessa.then(salvandoMeuQuizz);
     promessa.catch(erro);
@@ -494,11 +522,10 @@ function irParaFinalizacao() {
 function popularFinalizacao() {
     const finalizar = document.querySelector(".finalizar-criacao div");
     finalizar.innerHTML = `
-    <div>
         <img src="${urlTitulo}">
         <div class="degrade-finalizacao"></div>
-        <span>${tituloQuizz}</span>
-    </div>`;
+        <div class="titulo"><p>${tituloQuizz}</p></div>
+    `;
 }
 
 function acessarQuizz() {

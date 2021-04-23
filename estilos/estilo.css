@@ -296,6 +296,15 @@ li img{
     padding-top: 21px;
     padding-bottom: 24px;
 }
+.novo-quiz p{
+    color: #EC362D;
+    font-size: 16px;
+    align-self: flex-start;
+    margin: 0 0 17px 18px;
+}
+.erro{
+    background-color: #FFE9E9;
+}
 .informacoes-basicas span,
 .criar-perguntas span,
 .definir-niveis span,
@@ -383,6 +392,13 @@ li img{
 .dados-pergunta, .dados-nivel{
     margin-left: 18px;
 }
+.dados-pergunta p,
+.dados-nivel p{
+    color: #EC362D;
+    font-size: 16px;
+    align-self: flex-start;
+    margin-bottom: 17px;
+}
 .dropdown{
     position: absolute;
     visibility: hidden;
@@ -415,13 +431,18 @@ li img{
     flex-direction: column;
     align-items: center;
 }
-.caixa-finalizacao span{
+.caixa-finalizacao .titulo{
+    display: flex;
+    align-items: flex-end;
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    width: 90%;
+    height: 150px;
+}
+.caixa-finalizacao p{
     color: #ffffff;
     font-size: 23px;
-    position: absolute;
-    top: 140px;
-    left: 20px;
-    width: 80%;
     font-weight: 400;
 }
 .degrade-finalizacao{
@@ -542,7 +563,7 @@ li img{
   }
   .informacoes-basicas button,
   .criar-perguntas button,
-  .niveis button,
+  .definir-niveis button,
   .botao-acesso{
     width: 324px;
     margin-top: 29px;
@@ -558,8 +579,14 @@ li img{
   .dados-nivel{
     display: flex;
     flex-direction: column;
-    margin-left: 0;
+    margin-left: 14px;
   }
+  .dados-pergunta p,
+  .dados-nivel p{
+    margin-left: 1px;
+    max-width: 94%;
+}
+
   .numero-pergunta{
     width: 100%;
   }
@@ -582,15 +609,17 @@ li img{
   .caixa-finalizacao img{
     width: 340px;
     height: 181px;
-    border: 2px solid green;
   }
   .degrade-finalizacao{
     width: 340px;
     height: 181px;
   }
-  .caixa-finalizacao span{
+  .caixa-finalizacao .titulo{
+    top: 50px;
+    height: 120px;
+  }
+  .caixa-finalizacao p{
     font-size: 19px;
-    top: 100px;
   }
 }
 
