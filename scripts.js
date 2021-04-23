@@ -2,9 +2,11 @@ let numeroPerguntasRespondidas = 0, numeroPerguntasAcertadas = 0, numeroPergunta
 let tituloQuizz = "", urlTitulo = "", qntPerguntas = 0, niveis = 0, meuQuizz = 0;
 const dados = {};
 let idSeusQuizzes = JSON.parse(localStorage.getItem("Meus quizzes"));
+const telaCarregamento = document.querySelector(".tela-carregamento");
 pegarquizzes();
 
 function pegarquizzes() {
+    telaCarregamento.classList.remove("escondido");
     const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes");
     promise.then(popularquizzes);
 }
@@ -39,6 +41,7 @@ function popularquizzes(resposta) {
             </li>`;
         }
     }
+    telaCarregamento.classList.add("escondido");
 }
 
 function verificandoMeusQuizzes(quizz){
@@ -63,6 +66,7 @@ function popularMeuQuizz(quizz){
 }
 
 function abrirQuizz(quizz) {
+    telaCarregamento.classList.remove("escondido");
     const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${quizz.id}`);
     promise.then(criarPaginaQuizz);
     idQuizzAberto = quizz.id;
@@ -84,6 +88,7 @@ function criarPaginaQuizz(resposta) {
     numeroPerguntasTotal = perguntas.length;
     niveisQuizzAberto = resposta.data.levels;
     perguntas.forEach(popularPerguntasQuizzAberto);
+    telaCarregamento.classList.add("escondido");
 }
 
 function popularPerguntasQuizzAberto(pergunta, indice) {
@@ -180,6 +185,7 @@ function sairQuizzAberto() {
     paginaQuizz.scrollTo(0, 0);
     document.querySelector(".pagina-quizz-aberto").classList.add("escondido");
     window.scrollTo(0, 0);
+    pegarquizzes();
 }
 
 
@@ -468,6 +474,9 @@ function finalizarQuizz() {
     }
 
     dados.levels = levels;
+
+    telaCarregamento.classList.remove("escondido");
+
     const promessa = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes", dados);
     promessa.then(salvandoMeuQuizz);
     promessa.catch(erro);
@@ -479,10 +488,12 @@ function salvandoMeuQuizz(resposta) {
     meuQuizz = resposta.data;
     idSeusQuizzes.push(meuQuizz.id);
     localStorage.setItem("Meus quizzes", JSON.stringify(idSeusQuizzes));
+    telaCarregamento.classList.add("escondido");
 }
 
 function erro() {
     alert("Ocorreu um erro no envio do seu quizz");
+    telaCarregamento.classList.remove("escondido");
 }
 
 function irParaFinalizacao() {
@@ -521,7 +532,8 @@ function voltarHome() {
     const cabecalho = document.querySelector(".cabecalho");
     cabecalho.classList.remove("escondido");
     const todosQuizzes = document.querySelector(".todos-quizzes");
-    todosQuizzes.classList.remove("escondido")
+    todosQuizzes.classList.remove("escondido");
+    document.querySelector(".pagina-inicial").classList.remove("escondido");
 }
 
 function validateURL(str) {
