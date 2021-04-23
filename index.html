@@ -15,20 +15,21 @@
     <div class="topo">
         <h1>BuzzQuizz</h1>
     </div>
-    <div class="pagina-inicial escondido">
-        <div class="meus-quizzes escondido">
+    <div class="pagina-inicial">
+        <div class="meus-quizzes">
             <div class="cabecalho escondido">
                 <span>Seus Quizzes</span>
-                <ion-icon name="add-circle"></ion-icon>
+                <ion-icon name="add-circle" onclick="abrirCriadorDeQuizzes()"></ion-icon>
             </div>
             <div class="nenhum-quizz">
                 <span>
                     Você não criou nenhum <br> quizz ainda :(
                 </span>
-                <button>Criar Quizz</button>
+                <button onclick="abrirCriadorDeQuizzes()">Criar Quizz</button>
             </div>
+            <ul></ul>
         </div>
-        <div class="todos-quizzes escondido">
+        <div class="todos-quizzes">
             <span><strong>Todos os Quizzes</strong></span>
             <ul>
             </ul>
