@@ -363,22 +363,22 @@ function finalizarQuizz(){
         porcentagens.push(porcentagem);
 
         if (titulo.length<10){
-            alert("Preencha os dados corretamente a");
+            alert("Preencha os dados corretamente");
             return;
         }
 
         if (porcentagem<0 || porcentagem>100 || porcentagem===""){
-            alert("Preencha os dados corretamente b");
+            alert("Preencha os dados corretamente");
             return;
         }
 
         if (!validateURL(urlImagem)){
-            alert("Preencha os dados corretamente c");
+            alert("Preencha os dados corretamente");
             return;
         }
 
         if (descricao<30){
-            alert("Preencha os dados corretamente d");
+            alert("Preencha os dados corretamente");
             return;
         }
     
@@ -392,17 +392,17 @@ function finalizarQuizz(){
     }
     console.log(porcentagens);
     if (porcentagens.indexOf(0)===-1){
-        alert("Preencha os dados corretamente e");
+        alert("Preencha os dados corretamente");
         return;
     }
 
     dados.levels = levels;
     console.log(dados);
-    //const promessa = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes", dados);
-    //promessa.then(executado);
-    //promessa.catch(erro);
+    const promessa = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes", dados);
+    promessa.then(executado);
+    promessa.catch(erro);
 
-    //irParaFinalizacao();
+    irParaFinalizacao();
 }
 
 function executado(){
