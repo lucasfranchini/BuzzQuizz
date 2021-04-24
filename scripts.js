@@ -79,8 +79,11 @@ function popularMeuQuizz(quizz){
 }
 
 function abrirQuizz(quizz) {
+    if(quizz.id===""){
+        quizz= quizz.parentNode;
+    }
     telaCarregamento.classList.remove("escondido");
-    const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${quizz.parentNode.id}`);
+    const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${quizz.id}`);
     promise.then(criarPaginaQuizz);
     idQuizzAberto = quizz.id;
 }
