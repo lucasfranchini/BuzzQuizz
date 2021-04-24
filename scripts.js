@@ -1,7 +1,7 @@
-let numeroPerguntasRespondidas = 0, numeroPerguntasAcertadas = 0, numeroPerguntasTotal = 0, niveisQuizzAberto = [], idQuizzAberto = 0;
+let numeroPerguntasRespondidas = 0, numeroPerguntasAcertadas = 0, numeroPerguntasTotal = 0, niveisQuizzAberto = [], idQuizzAberto = 0,contador=0;;
+let seusQuizzes = JSON.parse(localStorage.getItem("Meus quizzes"));
 let tituloQuizz = "", urlTitulo = "", qntPerguntas = 0, niveis = 0, meuQuizz = 0;
-const dados = {};
-let idSeusQuizzes = JSON.parse(localStorage.getItem("Meus quizzes"));
+let dados = {};
 const telaCarregamento = document.querySelector(".tela-carregamento");
 pegarquizzes();
 
@@ -12,19 +12,23 @@ function pegarquizzes() {
 }
 
 function popularquizzes(resposta) {
+    contador =0;
     let quizzes = resposta.data;
     const campoTodosQuizzes = document.querySelector(".todos-quizzes ul");
     campoTodosQuizzes.innerHTML = "";
-    if (idSeusQuizzes === null) {
+    if (seusQuizzes === null) {
         for (let i = 0; i < quizzes.length; i++) {
             campoTodosQuizzes.innerHTML += `
-            <li id=${quizzes[i].id} onclick =" abrirQuizz(this)" >
+            <li id=${quizzes[i].id}  >
                 <img src="${quizzes[i].image}">
-                <div class="degrade"></div>
-                <span>${quizzes[i].title}</span>
+                <div class="degrade" onclick ="abrirQuizz(this)"></div>
+                <span onclick ="abrirQuizz(this)">${quizzes[i].title}</span>
             </li>`;
         }
-        idSeusQuizzes = [];
+        seusQuizzes = {
+            id : [],
+            key: []
+        };
     }
     else {
         const campoMeusQuizzes = document.querySelector(".meus-quizzes ul");
@@ -32,12 +36,16 @@ function popularquizzes(resposta) {
         document.querySelector(".cabecalho").classList.remove("escondido");
         campoMeusQuizzes.innerHTML = "";
         quizzes = quizzes.filter(verificandoMeusQuizzes)
+        if(contador === 0){
+            document.querySelector(".nenhum-quizz").classList.remove("escondido");
+            localStorage.removeItem("Meus quizzes");
+        }
         for (let i = 0; i < quizzes.length; i++) {
             campoTodosQuizzes.innerHTML += `
-            <li id=${quizzes[i].id} onclick =" abrirQuizz(this)" >
+            <li id=${quizzes[i].id}  >
                 <img src="${quizzes[i].image}">
-                <div class="degrade"></div>
-                <span>${quizzes[i].title}</span>
+                <div class="degrade"onclick ="abrirQuizz(this)"></div>
+                <span onclick ="abrirQuizz(this)">${quizzes[i].title}</span>
             </li>`;
         }
     }
@@ -45,11 +53,12 @@ function popularquizzes(resposta) {
 }
 
 function verificandoMeusQuizzes(quizz){
-    let verificador =true;
-    for(let i = 0; i<idSeusQuizzes.length;i++){
-        if(quizz.id === idSeusQuizzes[i]){
+    let verificador =true; 
+    for(let i = 0; i<seusQuizzes.id.length;i++){
+        if(quizz.id === seusQuizzes.id[i]){
             verificador = false;
             popularMeuQuizz(quizz);
+            contador++;
         }
     }
     return verificador;
@@ -58,14 +67,21 @@ function verificandoMeusQuizzes(quizz){
 function popularMeuQuizz(quizz){
     const campoMeusQuizzes = document.querySelector(".meus-quizzes ul");
     campoMeusQuizzes.innerHTML += `
-    <li id=${quizz.id} onclick =" abrirQuizz(this)" >
-        <img src="${quizz.image}">
-        <div class="degrade"></div>
-        <span>${quizz.title}</span>
+    <li id=${quizz.id}>
+        <img src="${quizz.image}" >
+        <div class="degrade"onclick ="abrirQuizz(this)"></div>
+        <span onclick ="abrirQuizz(this)">${quizz.title}</span>
+        <div class="edit-delete">
+            <ion-icon name="create-outline" onclick = "editarQuizz(this)"></ion-icon>
+            <ion-icon name="trash-outline" onclick = "deletarQuizz(this)">></ion-icon>
+        </div>
     </li>`;
 }
 
 function abrirQuizz(quizz) {
+    if(quizz.id===""){
+        quizz= quizz.parentNode;
+    }
     telaCarregamento.classList.remove("escondido");
     const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${quizz.id}`);
     promise.then(criarPaginaQuizz);
@@ -294,17 +310,17 @@ function popularPerguntas() {
     }
 }
 
-function abrirMenuDados(perguntaAberta) { // pega o elemento que voce clicou, que no caso é o ion-icon
-    const dadosPergunta = perguntaAberta.parentNode.nextElementSibling;// do ion-icon vai até a parte que fica com os dados daquela pergunta
-    const dadosTodasPerguntas = document.querySelectorAll(".dados-pergunta");//pega todos os dados de todas as perguntas
-    const icones = document.querySelectorAll(".numero-pergunta ion-icon");//pega todos os icones das perguntas
+function abrirMenuDados(perguntaAberta) { 
+    const dadosPergunta = perguntaAberta.parentNode.nextElementSibling;
+    const dadosTodasPerguntas = document.querySelectorAll(".dados-pergunta");
+    const icones = document.querySelectorAll(".numero-pergunta ion-icon");
     for (let i = 0; i < dadosTodasPerguntas.length; i++) {
-        dadosTodasPerguntas[i].classList.add("dropdown");//coloca o dropdown em todas as perguntas
-        icones[i].classList.remove("escondido");//remove o escondido das perguntas que não estão maximizadas
+        dadosTodasPerguntas[i].classList.add("dropdown");
+        icones[i].classList.remove("escondido");
     }
-    dadosPergunta.classList.remove("dropdown");// remove o dropdown só dos dados do ion-icon que voce clicou
-    dadosPergunta.parentNode.scrollIntoView();//sobe para o inicio daquela pergunta(desnecessario,mas eu estava querendo testar essa função)
-    perguntaAberta.classList.add("escondido");// esconde o ion-icon que voce clicou
+    dadosPergunta.classList.remove("dropdown");
+    dadosPergunta.parentNode.scrollIntoView();
+    perguntaAberta.classList.add("escondido");
 }
 
 function prosseguirParaNiveis() {
@@ -486,14 +502,16 @@ function finalizarQuizz() {
 
 function salvandoMeuQuizz(resposta) {
     meuQuizz = resposta.data;
-    idSeusQuizzes.push(meuQuizz.id);
-    localStorage.setItem("Meus quizzes", JSON.stringify(idSeusQuizzes));
+    console.log(resposta);
+    seusQuizzes.id.push(meuQuizz.id);
+    seusQuizzes.key.push(meuQuizz.key);
+    localStorage.setItem("Meus quizzes", JSON.stringify(seusQuizzes));
     telaCarregamento.classList.add("escondido");
 }
 
 function erro() {
     alert("Ocorreu um erro no envio do seu quizz");
-    telaCarregamento.classList.remove("escondido");
+    telaCarregamento.classList.add("escondido");
 }
 
 function irParaFinalizacao() {
@@ -552,3 +570,35 @@ function isHexColor(str) {
     }
     return true;
 }
+
+////////////////sessão do bonus de deletar////////////////
+
+function deletarQuizz(QuizzIon){
+    const confirmar = confirm('Tem certeza que deseja deletar esse quizz');
+    if(!confirmar){
+        return;
+    }
+    const quizz = QuizzIon.parentNode.parentNode;
+    const key = seusQuizzes.key[seusQuizzes.id.indexOf(parseInt(quizz.id))];
+    const promessa = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/buzzquizz/quizzes/${parseInt(quizz.id)}`,{headers: {'Secret-Key': key}});
+    promessa.then(deletarQuizzDoCache);
+    promessa.catch(()=>alert("Algo impediu seu quizz de ser apagado, tente novamente"));
+
+    function deletarQuizzDoCache(){
+        seusQuizzes.key = seusQuizzes.key.filter(function(chave){
+            if(chave === key){
+                return false;
+            }
+            return true;
+        })
+        seusQuizzes.id = seusQuizzes.id.filter(function(id){
+            if(id === parseInt(quizz.id)){
+                return false;
+            }
+            return true;
+        });
+        localStorage.setItem("Meus quizzes", JSON.stringify(seusQuizzes));
+        pegarquizzes();
+    }
+}
+
