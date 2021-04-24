@@ -261,7 +261,7 @@ function popularPerguntas() {
                 </div>
                 <div class="dados-pergunta dropdown">
                     <input type="text" class="texto" placeholder="Texto da pergunta" onfocus="this.value='';">
-                    <p class="escondido">O título deve conter no mínimo 20 caracteres.</p>
+                    <p class="alertTexto escondido">O título deve conter no mínimo 20 caracteres.</p>
                     <input type="text" class="cor" placeholder="Cor de fundo da pergunta" onfocus="this.value='';">
                     <p class="escondido">A cor deve ter o formato hexadecimal, com letras de A a F e números (ex. #e3f1a5).</p>    
                     <h2>Resposta correta</h2>
@@ -317,7 +317,7 @@ function prosseguirParaNiveis() {
         const respostaCorreta = pergunta.querySelector(".dados-pergunta .correta").value;
         const urlRespostaCorreta = pergunta.querySelector(".dados-pergunta .urlRespostaCorreta").value;
         const answers = [];
-
+        
         if (texto.length < 20) {
             alert("Preencha os dados corretamente");
             return;
