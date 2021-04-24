@@ -38,6 +38,7 @@ function popularquizzes(resposta) {
         quizzes = quizzes.filter(verificandoMeusQuizzes)
         if(contador === 0){
             document.querySelector(".nenhum-quizz").classList.remove("escondido");
+            localStorage.removeItem("Meus quizzes");
         }
         for (let i = 0; i < quizzes.length; i++) {
             campoTodosQuizzes.innerHTML += `
