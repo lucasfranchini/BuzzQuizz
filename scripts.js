@@ -72,7 +72,6 @@ function popularMeuQuizz(quizz){
         <div class="degrade"onclick ="abrirQuizz(this)"></div>
         <span onclick ="abrirQuizz(this)">${quizz.title}</span>
         <div class="edit-delete">
-            <ion-icon name="create-outline" onclick = "editarQuizz(this)"></ion-icon>
             <ion-icon name="trash-outline" onclick = "deletarQuizz(this)">></ion-icon>
         </div>
     </li>`;
@@ -502,7 +501,6 @@ function finalizarQuizz() {
 
 function salvandoMeuQuizz(resposta) {
     meuQuizz = resposta.data;
-    console.log(resposta);
     seusQuizzes.id.push(meuQuizz.id);
     seusQuizzes.key.push(meuQuizz.key);
     localStorage.setItem("Meus quizzes", JSON.stringify(seusQuizzes));
@@ -534,6 +532,7 @@ function popularFinalizacao() {
 
 function acessarQuizz() {
     pegarquizzes();
+    document.querySelector(".pagina-inicial").classList.remove("escondido");
     const pagFinalizacao = document.querySelector(".finalizar-criacao");
     pagFinalizacao.classList.add("escondido");
     const meusQuizzes = document.querySelector(".meus-quizzes");
